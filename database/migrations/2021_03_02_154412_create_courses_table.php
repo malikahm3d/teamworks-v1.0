@@ -20,7 +20,6 @@ class CreateCoursesTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('email')->unique();
             $table->timestamps();
         });
     }

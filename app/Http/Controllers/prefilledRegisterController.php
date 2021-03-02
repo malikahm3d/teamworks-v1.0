@@ -14,7 +14,7 @@ class prefilledRegisterController extends Controller
     public function showAllUniversities()
     {
         $universities = University::all();
-        return view('showAllUniversities', [
+        return view('auth.showAllUniversities', [
             'universities' => $universities
         ]);
     }
@@ -22,7 +22,7 @@ class prefilledRegisterController extends Controller
     public function showFacultiesInUni(University $university)
     {
         $faculties = $university->faculties;
-        return view('showFacultiesInUni', [
+        return view('auth.showFacultiesInUni', [
             'university' => $university,
             'faculties' => $faculties
         ]);
@@ -30,8 +30,8 @@ class prefilledRegisterController extends Controller
 
     public function showDepartmentsInFaculty(University $university, Faculty $faculty)
     {
-        $departments = $faculty->departmants;
-        return view('showDepartmentsInFaculty', [
+        $departments = $faculty->departments    ;
+        return view('auth.showDepartmentsInFaculty', [
             'university' => $university,
             'faculty' => $faculty,
             'departments' => $departments
@@ -47,9 +47,9 @@ class prefilledRegisterController extends Controller
             'chosenUniversity' => $university,
             'chosenFaculty' => $faculty,
             'chosenDepartment' => $department,
-            'universities' => $allUniversities,
-            'faculties'=> $allFaculties,
-            'departments' => $allDepartments
+            'allUniversities' => $allUniversities,
+            'allFaculties'=> $allFaculties,
+            'allDepartments' => $allDepartments
         ]);
     }
 
