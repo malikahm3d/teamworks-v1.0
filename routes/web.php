@@ -5,7 +5,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\prefilledRegisterController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserCourseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,20 +23,20 @@ Route::get('/', function () {
 });
 
 //auth routes:
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('showLoginForm');
 
 Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
 
 Route::get('/register', [RegisterController::class, 'index'])->name('normalForm');
 
-Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showUniversities');
+Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
 
 Route::post('/universities/{university:name}/faculties', [prefilledRegisterController::class, 'showFacultiesInUni'])->name('showFaculties');
 
 Route::post('/universities/{university:name}/faculties/{faculty:name}',
     [prefilledRegisterController::class, 'showDepartmentsInFaculty'])->name('showDepartments');
 
-Route::post('/universities/{university:name}/faculties/{faculty:name}/departments/{departments:name}/register',
+Route::match(['get', 'post'],'/universities/{university:name}/faculties/{faculty:name}/departments/{department:name}',
     [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
 //maybe do post AND get for the above (for when user hits 'back')
 

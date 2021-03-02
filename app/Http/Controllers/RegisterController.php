@@ -22,9 +22,9 @@ class RegisterController extends Controller
         $allFaculties = Faculty::all();
         $allDepartments = Department::all();
         return view('auth.register', [
-            'universities' => $allUniversities,
-            'faculties'=> $allFaculties,
-            'departments' => $allDepartments
+            'allUniversities' => $allUniversities,
+            'allFaculties'=> $allFaculties,
+            'allDepartments' => $allDepartments
         ]);
     }
 
@@ -35,8 +35,8 @@ class RegisterController extends Controller
         $departmentsInThisFaculty = Faculty::all()->where('id', $request->faculty)->first()->departments->pluck('id');
         $validatedData = $request->validate([
             'name' => ['required', 'max:255'],
-            'username' => ['required', 'unique'],
-            'email' => ['email', 'unique'],
+            'username' => ['required', 'unique:users'],
+            'email' => ['email', 'unique:users'],
             'password' => ['required'],
             'university' => ['required'],
             'faculty' => ['required',
@@ -50,14 +50,13 @@ class RegisterController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'university_id' => $request->univeristy,
+            'university_id' => $request->university,
             'faculty_id' => $request->faculty,
             'department_id' => $request->department,
         ]);
 
         //TODO: log user in after regsitering
         //take user to see courses in his department
-        return view('coursesInDepartment');
     }
 
 }
