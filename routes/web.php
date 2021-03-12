@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\prefilledRegisterController;
@@ -22,38 +23,47 @@ Route::get('/', function () {
     return view('test');
 });
 
+Route::get('/home', function () {
+    return redirect(\route('showCourses'));
+});
+
+Route::middleware(['guest'])->group(function (){
+
 //auth routes:
-Route::get('/login', [LoginController::class, 'index'])->name('showLoginForm');
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
+    Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
 
-Route::get('/register', [RegisterController::class, 'index'])->name('normalForm');
+    Route::get('/register', [RegisterController::class, 'index'])->name('normalForm');
 
-Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
+    Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
 
-Route::post('/universities/{university:name}/faculties', [prefilledRegisterController::class, 'showFacultiesInUni'])->name('showFaculties');
+    Route::post('/universities/{university:name}/faculties', [prefilledRegisterController::class, 'showFacultiesInUni'])->name('showFaculties');
 
-Route::post('/universities/{university:name}/faculties/{faculty:name}',
-    [prefilledRegisterController::class, 'showDepartmentsInFaculty'])->name('showDepartments');
+    Route::post('/universities/{university:name}/faculties/{faculty:name}',
+        [prefilledRegisterController::class, 'showDepartmentsInFaculty'])->name('showDepartments');
 
-Route::match(['get', 'post'],'/universities/{university:name}/faculties/{faculty:name}/departments/{department:name}',
-    [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
+    Route::match(['get', 'post'],'/universities/{university:name}/faculties/{faculty:name}/departments/{department:name}',
+        [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
 //maybe do post AND get for the above (for when user hits 'back')
 
-Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
+    Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
+
+});
 
 
+Route::middleware(['auth'])->group(function () {
+    //course and enrollments routes:
+    Route::get('/courses', [CourseController::class, 'index'])->name('showCourses');
 
-//course routes:
-Route::get('/courses', [CourseController::class, 'index'])->name('showCourses');
-
-Route::post('/courses/{course:id}', [CourseController::class, 'EnrollCourse'])->name('enrollCourse');
-
+    Route::post('/courses/{course:id}', [CourseController::class, 'EnrollCourse'])->name('enrollCourse');
+    Route::delete('/courses/{course:id}', [CourseController::class, 'DropCourse'])->name('dropCourse');
 
 
 //post routes:
-Route::get('/courses', [PostController::class, 'PostsInEnrolledCourses'])->name('postsInEnrolledCourses');
+    Route::get('/index', [PostController::class, 'PostsInEnrolledCourses'])->name('postsInEnrolledCourses');
 
-Route::get('/courses/{course:name}/posts', [PostController::class, 'PostsInACourse'])->name('postsInACourse');
+    Route::get('/courses/{course:name}/posts', [PostController::class, 'PostsInACourse'])->name('postsInACourse');
 
-Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
+    Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
+});
