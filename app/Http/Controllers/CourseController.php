@@ -8,12 +8,22 @@ use Illuminate\Http\Request;
 class CourseController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
     public function index(Request $request)
     {
-        //show courses inside users' department
         $courses = $request->user()->department->courses;
-        return view('coursesInDepartment', [
-            'courses' => $courses
+        //get courses inside users' department
+
+        $regCourses = $request->user()->courses->pluck('id');
+        //get courses (IDs) inside user's enrollments
+
+        return view('showCoursesInDep', [
+            'courses' => $courses,
+            'regCourses' => $regCourses
         ]);
     }
 
@@ -22,9 +32,14 @@ class CourseController extends Controller
         $course->enrollments()->create([
             'user_id' => $request->user()->id
         ]);
-        //return user to that course's posts page
-        //i.e. return the posts page with the course in the parameter
-        return route('posts', $course);
+        return back();
+    }
+
+    public function DropCourse(Course $course, Request $request)
+    {
+        $course->enrollments()->where(
+            'user_id', $request->user()->id)->delete();
+        return back();
     }
 
 }
