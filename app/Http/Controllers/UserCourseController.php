@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Models\Course;
 
-class CourseController extends Controller
+class UserCourseController extends Controller
 {
-    //
     public function index(Request $request)
     {
         //show courses inside users' department
