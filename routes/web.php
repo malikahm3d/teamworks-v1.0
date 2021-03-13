@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\prefilledRegisterController;
@@ -36,6 +35,7 @@ Route::middleware(['guest'])->group(function (){
 
     Route::get('/register', [RegisterController::class, 'index'])->name('normalForm');
 
+
     Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
 
     Route::post('/universities/{university:name}/faculties', [prefilledRegisterController::class, 'showFacultiesInUni'])->name('showFaculties');
@@ -45,7 +45,7 @@ Route::middleware(['guest'])->group(function (){
 
     Route::match(['get', 'post'],'/universities/{university:name}/faculties/{faculty:name}/departments/{department:name}',
         [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
-//maybe do post AND get for the above (for when user hits 'back')
+    //maybe do post AND get for the above (for when user hits 'back')
 
     Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
 
@@ -53,7 +53,8 @@ Route::middleware(['guest'])->group(function (){
 
 
 Route::middleware(['auth'])->group(function () {
-    //course and enrollments routes:
+
+//course and enrollment routes:
     Route::get('/courses', [CourseController::class, 'index'])->name('showCourses');
 
     Route::post('/courses/{course:id}', [CourseController::class, 'EnrollCourse'])->name('enrollCourse');
@@ -63,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
 //post routes:
     Route::get('/index', [PostController::class, 'PostsInEnrolledCourses'])->name('postsInEnrolledCourses');
 
-    Route::get('/courses/{course:name}/posts', [PostController::class, 'PostsInACourse'])->name('postsInACourse');
+    Route::get('/courses/{course:name}/posts', [PostController::class, 'ShowPostsInACourse'])->name('postsInACourse');
+    Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePostInACourse'])->name('createPost');
 
-    Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
 });
