@@ -12,7 +12,7 @@ class PostController extends Controller
     public function PostsInACourse(Course $course)
     {
         $posts = $course->posts;
-        return view('PostsInACourse', [
+        return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
         ]);
@@ -23,7 +23,7 @@ class PostController extends Controller
         //show posts in enrolled courses
         $regCoursesIds = Course::getCourses($request->user());
         $posts = Post::all()->whereIn('course_id', $regCoursesIds);
-        return view('PostsInEnrolledCourses',[
+        return view('courses.posts.PostsInEnrolledCourses',[
             'posts' => $posts
         ]);
     }
@@ -41,7 +41,12 @@ class PostController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-        return route('posts', $course);
+        return redirect(route('postsInACourse', $course));
+    }
+
+    public static function ShowPost(Post $post)
+    {
+        return view('courses.posts.show', ['post' => $post]);
     }
 
 }

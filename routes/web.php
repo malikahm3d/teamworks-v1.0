@@ -24,8 +24,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return redirect(\route('showCourses'));
-});
+    return redirect(\route('postsInEnrolledCourses'));
+})->name('homepage');
 
 Route::middleware(['guest'])->group(function (){
 
@@ -61,9 +61,12 @@ Route::middleware(['auth'])->group(function () {
 
 
 //post routes:
-    Route::get('/index', [PostController::class, 'PostsInEnrolledCourses'])->name('postsInEnrolledCourses');
+    Route::get('/posts', [PostController::class, 'PostsInEnrolledCourses'])->name('postsInEnrolledCourses');
 
-    Route::get('/courses/{course:name}/posts', [PostController::class, 'PostsInACourse'])->name('postsInACourse');
+    Route::get('/posts/{course:name}/index', [PostController::class, 'PostsInACourse'])->name('postsInACourse');
 
-    Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
+    Route::get('/posts/{post:id}/show', [PostController::class, 'ShowPost'])->name('showPost');
+
+    Route::post('/posts/{course}/create', [PostController::class, 'CreatePost'])->name('createPost');
+
 });
