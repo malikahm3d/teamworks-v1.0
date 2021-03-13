@@ -13,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        Permission::create(['name' => 'edit roles']);
+        Permission::create(['name' => 'remove roles']);
+        Permission::create(['name' => 'create roles']);
+        Permission::create(['name' => 'permission to say hellp']);
+
+        $role = Role::create(['name' => 'admin'])->givePermissionTo(['edit roles', 'remove roles', 'create roles']);
     }
 }

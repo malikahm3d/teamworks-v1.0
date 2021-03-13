@@ -1,11 +1,18 @@
 <?php
 
-use App\Http\Controllers\CourseController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\prefilledRegisterController;
 use App\Http\Controllers\RegisterController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\UniversityController;
+use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +41,13 @@ Route::middleware(['guest'])->group(function (){
     Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
 
     Route::get('/register', [RegisterController::class, 'index'])->name('normalForm');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+//Auth Routes
+require __DIR__.'/auth.php';
+
 
 
     Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
@@ -46,6 +60,7 @@ Route::middleware(['guest'])->group(function (){
     Route::match(['get', 'post'],'/universities/{university:name}/faculties/{faculty:name}/departments/{department:name}',
         [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
     //maybe do post AND get for the above (for when user hits 'back')
+// Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
 
     Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
 
@@ -71,3 +86,42 @@ Route::middleware(['auth'])->group(function () {
 
 
 });
+Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
+
+Route::group(['middleware' => ['role_or_permission:admin|create role|create permission']],function() {
+
+    //role routes
+    Route::get('panel', [UserController::class, 'adminPanel'])->name('admin.panel');
+    Route::get('panel/roles/manage', [RoleController::class, 'manage'])->name('roles.manage');
+    Route::patch('panel/roles/', [RoleController::class, 'updateRoles'])->name('roles.updateRoles');
+    Route::get('panel/user/{user}/roles', [UserController::class, 'getRoles'])->name('roles.users');
+    Route::resource('panel/roles', RoleController::class);
+
+    //permission routes
+    Route::get('panel/permissions/manage', [PermissionController::class, 'manage'])->name('permissions.manage');
+    Route::patch('panel/permissions/', [PermissionController::class, 'updatePermissions'])->name('permissions.updatePermissions');
+    Route::get('panel/user/{user}/permissions', [UserController::class, 'getPermissions'])->name('permissions.users');
+    Route::resource('panel/permissions', PermissionController::class);
+
+    //organization route
+    Route::get('panel/organization/', [UserController::class, 'univeristiesOrganizations'])->name('admin.panel.organization');
+    
+    //university routes
+    Route::resource('panel/organization/universities', UniversityController::class);
+
+    //faculty routes
+    Route::resource('panel/organization/faculties', FacultyController::class);
+    
+    //department routes
+    Route::resource('panel/organization/departments', DepartmentController::class);
+
+    //course routes
+    Route::resource('panel/organization/courses', CourseController::class);
+    
+});
+
+// routes for fetching university faculties and faculty departments for the dynamic select menu in user registeration form
+Route::get('university/{university}/faculties', [UniversityController::class, 'getFaculties'])->name('universities.faculties');
+Route::get('faculty/{faculty}/departments', [FacultyController::class, 'getDepartments'])->name('faculties.departments');
+
+Route::resource('users', UserController::class);
