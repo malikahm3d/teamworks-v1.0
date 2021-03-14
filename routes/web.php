@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\UserCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PostController;
@@ -41,15 +42,8 @@ Route::middleware(['guest'])->group(function (){
 
     Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 //Auth Routes
 require __DIR__.'/auth.php';
-
-
 
     Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
 
@@ -62,9 +56,9 @@ require __DIR__.'/auth.php';
         [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
     //maybe do post AND get for the above (for when user hits 'back')
 
-
     Route::get('/register', [RegisteredUserController::class, 'index'])->name('normalForm');
- Route::post('/register', [RegisteredUserController::class, 'store'])->name('storeUser');
+
+    Route::post('/register', [RegisteredUserController::class, 'store'])->name('storeUser');
 
     //Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
 
@@ -74,10 +68,13 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
 
 //course and enrollment routes:
-    Route::get('/courses', [CourseController::class, 'index'])->name('showCourses');
+    Route::get('/courses', [CourseController::class, 'index'])->name('RENAME');
+    Route::post('/courses/{course:id}', [CourseController::class, 'EnrollCourse'])->name('RENAME');
+    Route::delete('/courses/{course:id}', [CourseController::class, 'DropCourse'])->name('RENAME');
 
-    Route::post('/courses/{course:id}', [CourseController::class, 'EnrollCourse'])->name('enrollCourse');
-    Route::delete('/courses/{course:id}', [CourseController::class, 'DropCourse'])->name('dropCourse');
+    Route::get('/enrollment', [UserCourseController::class, 'index'])->name('showCourses');
+    Route::post('/enrollment/{course:id}', [UserCourseController::class, 'EnrollCourse'])->name('enrollCourse');
+    Route::delete('/enrollment/{course:id}', [UserCourseController::class, 'DropCourse'])->name('dropCourse');
 
 
 //post routes:
@@ -90,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 });
-Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
+//Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
 
 Route::group(['middleware' => ['role_or_permission:admin|create role|create permission']],function() {
 
@@ -121,6 +118,11 @@ Route::group(['middleware' => ['role_or_permission:admin|create role|create perm
 
     //course routes
     Route::resource('panel/organization/courses', CourseController::class);
+
+
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth'])->name('dashboard');
 
 });
 

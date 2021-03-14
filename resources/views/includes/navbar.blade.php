@@ -10,7 +10,7 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="{{ route('showCourses') }}">Enrollment</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,21 +18,19 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @auth()
-                        @foreach(auth()->user()->courses as $course)
+                        @forelse(auth()->user()->courses as $course)
                             <a class="dropdown-item" href="{{ route('postsInACourse', $course) }}">{{$course->name}}</a>
-                        @endforeach
+                        @empty
+                            <a class="dropdown-item" href="{{ route('showCourses') }}">Enroll Courses!</a>
+                        @endforelse
                     @endauth
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
-                               
-            @if(!Route::is('admin.panel')) 
+
+            @if(!Route::is('admin.panel'))
                     && @role('admin')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,8 +57,8 @@
                                         {{ __('Manage Universities Organizations') }}
                                     </a>
                                 </li>
-                                
-                        </ul> 
+
+                        </ul>
                     </li>
                     @endrole
 
@@ -69,7 +67,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
                     </li>
-                    @endif 
+                    @endif
                 <!-- Authentication Links -->
                 @guest
                     @if (Route::has('login'))
@@ -77,7 +75,7 @@
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @endif
-                    
+
                     @if (Route::has('register'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
@@ -104,7 +102,7 @@
                                         @csrf
                                     </form>
                                 </li>
-                            </ul>  
+                            </ul>
                     </li>
                 @endguest
             </ul>
