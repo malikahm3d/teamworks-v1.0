@@ -6,7 +6,7 @@
             <div>
                 <form action="{{ route('showFaculties', $university->name) }}" method="POST">
                     @csrf
-                    <button type="submit"><p> {{ $university->name }} </p></button>
+                    <button class="btn-primary btn-lg" type="submit"><p> {{ $university->name }} </p></button>
                 </form>
             </div>
         @endforeach

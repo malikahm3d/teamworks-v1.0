@@ -6,7 +6,7 @@
             <div>
                 <form action="{{ route('prefilledFrom', [$university->name, $faculty->name, $department->name]) }}" method="POST">
                     @csrf
-                    <button type="submit"><p> {{ $department->name }} </p></button>
+                    <button class="btn-primary btn-lg" type="submit"><p> {{ $department->name }} </p></button>
                 </form>
             </div>
         @endforeach
