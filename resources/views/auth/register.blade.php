@@ -13,7 +13,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('storeUser') }}">
             @csrf
 
             <!-- Name -->
@@ -61,7 +61,7 @@
                 <br><select name="university" id="university" required>
                     <option value="" selected disabled hidden >Select University</option>
                     @forelse($allUniversities as $uni)
-                    <option value="{{ $uni->id }}">{{ $uni->name }}</option>
+                    <option value="{{ $uni->id }}" {{ (isset($chosenUniversity) && $chosenUniversity == $uni ? 'selected':'') }}>{{ $uni->name }}</option>
                     @empty
                     <option disabled selected value>No University to Select</option>
                     @endforelse
@@ -70,11 +70,21 @@
                 <!-- Faculty -->
                 <select name="faculty" id="faculty" required>
                     <option value="" selected disabled hidden>Select faculty</option>
+                    @forelse($allFaculties as $fac)
+                    <option value="{{ $fac->id }}" {{ (isset($chosenFaculty) && $chosenFaculty == $fac ? 'selected':'') }}>{{ $fac->name }}</option>
+                    @empty
+                    <option disabled selected value>No Faculties to Select</option>
+                    @endforelse
                 </select>
 
                 <!-- Department -->
                 <select name="department" id="department" required>
                     <option value="" selected disabled hidden>Select department</option>
+                    @forelse($allDepartments as $dep)
+                    <option value="{{ $dep->id }}" {{ (isset($chosenDepartment) && $chosenDepartment == $dep ? 'selected':'') }}>{{ $dep->name }}</option>
+                    @empty
+                    <option disabled selected value>No Departments to Select</option>
+                    @endforelse
                 </select>
 
                 <!-- Role -->
@@ -97,13 +107,13 @@
                             $.get(url, function(data) {
                                 var faculty_select = $('form select[name= faculty]');
                                 var department_select = $('form select[name= department]');
-                                
+
                                 faculty_select.empty();
                                 department_select.empty();
 
                                 $.each(data,function(key, value) {
                                     console.log(value.name);
-                                    faculty_select.append('<option value=' + value.id + '>' + value.name + '</option>');   
+                                    faculty_select.append('<option value=' + value.id + '>' + value.name + '</option>');
                                 });
                                 if(faculty_select.children('option').length != 0){
                                     faculty_select[0].selectedIndex = -1;

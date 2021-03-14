@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Faculty;
 use App\Models\University;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class prefilledRegisterController extends Controller
 {
@@ -43,13 +44,15 @@ class prefilledRegisterController extends Controller
         $allUniversities = University::all();
         $allFaculties = Faculty::all();
         $allDepartments = Department::all();
+        $roles = Role::all();
         return view('auth.register', [
             'chosenUniversity' => $university,
             'chosenFaculty' => $faculty,
             'chosenDepartment' => $department,
             'allUniversities' => $allUniversities,
             'allFaculties'=> $allFaculties,
-            'allDepartments' => $allDepartments
+            'allDepartments' => $allDepartments,
+            'roles' => $roles,
         ]);
     }
 

@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function index()
     {
         //normal non-prefilled form
         $allUniversities = University::all();
