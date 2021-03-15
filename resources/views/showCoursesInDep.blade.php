@@ -6,9 +6,9 @@
 
     @foreach($courses as $course)
         @if(!in_array($course->id, $regCourses->all()))
-        <form action="{{ route('enrollCourse', $course) }}" method="POST" class="p-3 d-inline">
+        <form action="{{ route('enrollCourse', $course) }}" method="POST" class="p-1 d-inline">
             @csrf
-            <button type="submit" class="btn btn-primary btn-sm"><p>Enroll in: {{ $course->name }}</p></button>
+            <button type="submit" class="btn btn-primary btn-sm my-4"><p>Enroll in: {{ $course->name }}</p></button>
         </form>
         @else
         <form action="{{ route('dropCourse', $course) }}" method="POST" class="p-3 d-inline">

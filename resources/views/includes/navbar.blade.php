@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ route('homepage') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('showCourses') }}">Enrollment</a>
@@ -26,12 +26,9 @@
                     @endauth
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
 
             @if(!Route::is('admin.panel'))
-                    && @role('admin')
+                    @role('admin')
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                             Admin Panel
@@ -61,7 +58,6 @@
                         </ul>
                     </li>
                     @endrole
-
                     @endif
                     @if(!Route::is('dashboard'))
                     <li class="nav-item">
