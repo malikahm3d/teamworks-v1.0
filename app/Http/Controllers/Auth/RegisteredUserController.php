@@ -22,7 +22,7 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function create()
     {
         //normal non-prefilled form
         $allUniversities = University::all();
@@ -49,17 +49,19 @@ class RegisteredUserController extends Controller
     {
         $facultiesInThisUni = University::all()->where('id', $request->university)->first()->faculties->pluck('id');
         $departmentsInThisFaculty = Faculty::all()->where('id', $request->faculty)->first()->departments->pluck('id');
+        $roles = Role::all();
         $validatedData = $request->validate([
             'name' => ['required', 'max:255'],
             'username' => ['required', 'unique:users'],
             'email' => ['email', 'unique:users'],
-            'password' => ['required'],
+            'password' => ['required', 'confirmed'],
             'university' => ['required'],
             'faculty' => ['required',
                 Rule::in($facultiesInThisUni)],
             'department' => ['required',
-                Rule::in($departmentsInThisFaculty),
-            ]
+                Rule::in($departmentsInThisFaculty)],
+            'role' => ['required',
+                Rule::in($roles)],
         ]);
 
         $user = User::create([
@@ -71,8 +73,8 @@ class RegisteredUserController extends Controller
             'faculty_id' => $request->faculty,
             'department_id' => $request->department,
         ]);
-
-        $user->syncRoles($request->role);
+        if(! is_null($request->role))
+            $user->syncRoles($request->role);
 
         Auth::login($user);
 

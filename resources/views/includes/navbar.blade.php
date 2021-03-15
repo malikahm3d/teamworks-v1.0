@@ -33,7 +33,7 @@
             @if(!Route::is('admin.panel'))
                     && @role('admin')
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                             Admin Panel
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -83,7 +83,7 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                             {{ Auth::user()->name }}
                             @if(Auth::user()->avatar)
                             <img src="{{asset('/storage/images/'

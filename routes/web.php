@@ -35,39 +35,44 @@ Route::get('/home', function () {
     return redirect(\route('postsInEnrolledCourses'));
 })->name('homepage');
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+
 Route::middleware(['guest'])->group(function (){
 
 //auth routes:
-    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    // Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-    Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
+    // Route::post('/login', [LoginController::class, 'loguserin'])->name('login');
 
-//Auth Routes
-require __DIR__.'/auth.php';
-
+    
     Route::get('/universities', [prefilledRegisterController::class, 'showAllUniversities'])->name('showAllUniversities');
-
+    
     Route::post('/universities/{university:name}/faculties', [prefilledRegisterController::class, 'showFacultiesInUni'])->name('showFaculties');
-
+    
     Route::post('/universities/{university:name}/faculties/{faculty:name}',
-        [prefilledRegisterController::class, 'showDepartmentsInFaculty'])->name('showDepartments');
-
+    [prefilledRegisterController::class, 'showDepartmentsInFaculty'])->name('showDepartments');
+    
     Route::match(['get', 'post'],'/universities/{university:name}/faculties/{faculty:name}/departments/{department:name}',
-        [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
+    [prefilledRegisterController::class, 'prefilledFrom'])->name('prefilledFrom');
     //maybe do post AND get for the above (for when user hits 'back')
-
-    Route::get('/register', [RegisteredUserController::class, 'index'])->name('normalForm');
-
-    Route::post('/register', [RegisteredUserController::class, 'store'])->name('storeUser');
-
+    
+    // Route::get('/register', [RegisteredUserController::class, 'index'])->name('normalForm');
+    
+    // Route::post('/register', [RegisteredUserController::class, 'store'])->name('storeUser');
+    
     //Route::post('/register', [RegisterController::class, 'store'])->name('storeUser');
-
+    
 });
 
+//Auth Routes (this file contains all authentication related routes (login, logout, register, etc.))
+require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function () {
-
-//course and enrollment routes:
+    
+    //course and enrollment routes:
     Route::get('/courses', [CourseController::class, 'index'])->name('RENAME');
     Route::post('/courses/{course:id}', [CourseController::class, 'EnrollCourse'])->name('RENAME');
     Route::delete('/courses/{course:id}', [CourseController::class, 'DropCourse'])->name('RENAME');
@@ -119,10 +124,6 @@ Route::group(['middleware' => ['role_or_permission:admin|create role|create perm
     //course routes
     Route::resource('panel/organization/courses', CourseController::class);
 
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth'])->name('dashboard');
 
 });
 
