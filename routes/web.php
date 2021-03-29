@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserCourseController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -89,6 +90,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/posts/{post:id}/show', [PostController::class, 'ShowPost'])->name('showPost');
     Route::post('/posts/{course}/create', [PostController::class, 'CreatePost'])->name('createPost');
+
+    Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
+    Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
+
 
 
 });
