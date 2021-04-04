@@ -10,7 +10,13 @@ Document
 /**
 Use a better box model (opinionated).
 */
-
+body{
+    background-color: #f7fafc;
+    padding-top: 65px
+}
+.collapse.in {
+    display: block !important;
+}
 *,
 *::before,
 *::after {

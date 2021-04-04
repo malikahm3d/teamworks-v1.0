@@ -46,7 +46,10 @@ class PostController extends Controller
 
     public static function ShowPost(Post $post)
     {
-        return view('courses.posts.show', ['post' => $post]);
+        $comments = $post->comments;
+        //dd($comments);
+        return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
+
     }
 
 }
