@@ -3,14 +3,12 @@
         <strong class="font-light">{{ $comment->user->name }}</strong>
         <p class="text-lg" id="test">{{ $comment->body }}   {{$i}}</p>
 
-    @if($comment->parent_id == null)
-{{--        if statement to only allow one reply--}}
         <button class="btn btn-outline-primary btn-sm py-0 mb-2" style="font-size: 0.8em" type="button"
-                data-toggle="collapse" data-target="#collapse_target_{{$i}}" aria-expanded="false"
+                data-toggle="collapse" data-target="#collapse_target_{{$comment->id}}" aria-expanded="false"
                 aria-controls="multiCollapseExample2">Reply
         </button>
 
-        <div id="collapse_target_{{$i}}" class="collapse">
+        <div id="collapse_target_{{$comment->id}}" class="collapse">
             <form method="post" action="{{ route('reply.add') }}">
                 @csrf
                 <div class="col-lg-4">
@@ -29,7 +27,6 @@
                 @include('courses.posts.partials.comments', ['comments' => $comment->replies])
             </div>
         </div>
-    @endif
     </div>
 @empty
 @endforelse
