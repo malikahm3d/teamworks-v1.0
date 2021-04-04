@@ -13,6 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/lwiu8vmkfj3mu07j85iaqiqy49kg6cgz6s54o58wp4svmivb/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

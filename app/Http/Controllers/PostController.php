@@ -28,24 +28,61 @@ class PostController extends Controller
         ]);
     }
 
+    public function showCreate(Course $course)
+    {
+        return view('courses.posts.create', [
+            'course' => $course
+        ]);
+    }
+
     public function CreatePost(Request $request, Course $course)
     {
         $this->validate($request, [
             'title' => ['required'],
-            'body' => ['required']
+            'body' => ['required'],
+            'file' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,xlx', 'max:1999']
         ]);
 
-        $course->posts()->create([
+
+
+        $newPost = $course->posts()->create([
             'title' => $request->title,
             'body' => $request->body,
             'user_id' => $request->user()->id
         ]);
 
-        return redirect(route('postsInACourse', $course));
+
+        $this->createFile($newPost, $request);
+
+        return redirect(route('showPost', $newPost));
+
+    }
+
+    public function createFile(Post $post, Request $request)
+    {
+
+        $this->validate($request, [
+            'file' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,xlx', 'max:1999']
+        ]);
+
+        $fileModel = new \App\Models\File();
+
+        if($request->file()) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+
+            $fileModel->name = time().'_'.$request->file->getClientOriginalName();
+            $fileModel->file_path = '/storage/' . $filePath;
+            $post->file()->save($fileModel);
+
+        }
+
+
     }
 
     public static function ShowPost(Post $post)
     {
+
         $comments = $post->comments;
         //dd($comments);
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
