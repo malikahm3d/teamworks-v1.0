@@ -13,7 +13,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="body">body</label>
-                    <textarea class="form-control" type="text" name="body" id="body" placeholder="Enter Post Body" required></textarea>
+                    <textarea class="form-control" type="text" name="body" id="PostBody" placeholder="Enter Post Body" required></textarea>
                 </div>
                 <button class="btn btn-outline-primary mb-2">Submit</button>
             </form>
@@ -21,6 +21,10 @@
     </div>
 
     <script>
+        // const tinymce = require("tinymce");
+        tinymce.init({
+            selector: '#PostBody',
+        });
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
