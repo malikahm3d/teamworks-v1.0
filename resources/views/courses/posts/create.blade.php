@@ -4,8 +4,8 @@
 @section('content')
     <div class="row m-4 mb-5">
         <div class="col-6 offset-3">
-            <h1 class="text-center">New Post!</h1>
-            <form action="{{ route('createPost', $course) }}" method="POST" novalidate class="needs-validation">
+            <h1 class="text-center">create post in {{$course->name}}!</h1>
+            <form action="{{ route('post.create', $course) }}" method="POST" novalidate class="needs-validation">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>

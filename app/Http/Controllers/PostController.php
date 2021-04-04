@@ -28,6 +28,13 @@ class PostController extends Controller
         ]);
     }
 
+    public function showCreate(Course $course)
+    {
+        return view('courses.posts.create', [
+            'course' => $course
+        ]);
+    }
+
     public function CreatePost(Request $request, Course $course)
     {
         $this->validate($request, [
