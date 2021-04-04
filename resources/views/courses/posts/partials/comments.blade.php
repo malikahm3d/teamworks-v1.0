@@ -1,7 +1,8 @@
 @forelse($comments as $i => $comment)
     <div class="border rounded p-2 m-2">
         <strong class="font-light">{{ $comment->user->name }}</strong>
-        <p class="text-lg" id="test">{{ $comment->body }}   {{$i}}</p>
+
+        <p class="text-lg" id="test">{{ $comment->body }}</p>
 
         <button class="btn btn-outline-primary btn-sm py-0 mb-2" style="font-size: 0.8em" type="button"
                 data-toggle="collapse" data-target="#collapse_target_{{$comment->id}}" aria-expanded="false"
