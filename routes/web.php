@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/{post:id}/show', [PostController::class, 'ShowPost'])->name('showPost');
 
     Route::get('/post/{course:name}/create', [PostController::class, 'showCreate'])->name('post.showCreate');
-    Route::post('/posts/{course}/create', [PostController::class, 'CreatePost'])->name('post.create');
+    Route::post('/posts/{course}/create', [PostController::class, 'CreatePost', 'createFile'])->name('post.create');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
