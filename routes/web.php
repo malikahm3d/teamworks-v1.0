@@ -96,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+
 });
 //Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
 
