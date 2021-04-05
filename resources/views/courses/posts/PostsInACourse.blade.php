@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', e($course->name))
 @section('content')
 
 
