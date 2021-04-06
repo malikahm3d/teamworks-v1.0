@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
     {
         $facultiesInThisUni = University::all()->where('id', $request->university)->first()->faculties->pluck('id');
         $departmentsInThisFaculty = Faculty::all()->where('id', $request->faculty)->first()->departments->pluck('id');
-        $roles = Role::all();
+        $roles = Role::all()->pluck('id');
         $validatedData = $request->validate([
             'name' => ['required', 'max:255'],
             'username' => ['required', 'unique:users'],
