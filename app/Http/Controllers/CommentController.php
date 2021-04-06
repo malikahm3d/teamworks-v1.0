@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use function Couchbase\basicDecoderV1;
 
 class CommentController extends Controller
 {

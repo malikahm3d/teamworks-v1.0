@@ -15,12 +15,13 @@
                     </ul>
                 </div>
             @endif
-            <form method="post" action="{{ route('comment.add') }}">
+            <form method="post" id="commentForm" action="{{ route('comment.add') }}">
                 @csrf
                 <div class="form-group">
                     <label for="body"><h5>Leave a comment</h5></label>
                     <input type="text" id="body" name="body" class="form-control" placeholder="Leave a comment" />
-                    <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                    <input type="hidden" id="post_id" name="post_id" value="{{ $post->id }}" />
+                    <input type="hidden" id="user" name="user" value="{{auth()->user()}}">
                 </div>
                 <button type="submit" class="form-group btn btn-sm btn-outline-danger py-0" style="font-size: 0.8em;"> Add Comment</button>
             </form>

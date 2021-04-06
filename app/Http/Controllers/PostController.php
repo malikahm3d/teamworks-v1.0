@@ -84,8 +84,9 @@ class PostController extends Controller
     public static function ShowPost(Post $post)
     {
 
-        $comments = $post->comments;
-//        $comments = Comment::where('post_id', $post->id);
+//        $comments = $post->comments;
+        $comments = Comment::all()->where('post_id', $post->id);
+//        $comments = Comment::with(['user', 'post'])->where('post_id', $post->id);
         //dd($comments);
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
 
