@@ -23,6 +23,8 @@ class CommentController extends Controller
 
         $post = Post::find($request->post_id);
 
+        $comment->post()->associate($post);
+
         $post->comments()->save($comment);
 
         return back();
@@ -43,6 +45,8 @@ class CommentController extends Controller
         $reply->parent_id = $request->get('comment_id');
 
         $post = Post::find($request->get('post_id'));
+
+        $reply->post()->associate($post);
 
         $post->comments()->save($reply);
 

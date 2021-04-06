@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Course;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -84,6 +85,7 @@ class PostController extends Controller
     {
 
         $comments = $post->comments;
+//        $comments = Comment::where('post_id', $post->id);
         //dd($comments);
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
 
