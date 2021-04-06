@@ -98,6 +98,9 @@
                                         @csrf
                                     </form>
                                 </li>
+                                <li>
+                                     <a class="dropdown-item" href="{{route('users.edit', Auth::user()->id)}}">{{ __('Edit') }}</a>
+                                </li>
                             </ul>
                     </li>
                 @endguest
