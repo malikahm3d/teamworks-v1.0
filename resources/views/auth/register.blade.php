@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<x-alert />
 <x-guest-layout>
     <x-auth-card>
         <!-- Logo TODO: change to teamworks logo -->
