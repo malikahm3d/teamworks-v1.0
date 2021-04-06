@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->integer('parent_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->text('body');
             $table->integer('commentable_id')->unsigned();
             $table->string('commentable_type');
