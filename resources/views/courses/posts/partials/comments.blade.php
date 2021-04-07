@@ -1,5 +1,5 @@
 @forelse($comments as $i => $comment)
-    <div class="border rounded p-2 m-2">
+    <div class="border rounded p-2 m-2 mb-5">
         <strong class="font-light">{{ $comment->user->name }}</strong>
 
         <p class="text-lg" id="test">{{ $comment->body }}</p>
