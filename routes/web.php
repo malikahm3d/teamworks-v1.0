@@ -93,6 +93,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/post/{course:name}/create', [PostController::class, 'showCreate'])->name('post.showCreate');
     Route::post('/posts/{course}/create', [PostController::class, 'CreatePost', 'createFile'])->name('post.create');
     Route::delete('/posts/{post}/delete', [PostController::class, 'delete'])->name('post.delete');
+    Route::get('/posts/{post}/edit', [PostController::class, 'showEdit'])->name('post.showEdit');
+    Route::patch('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
