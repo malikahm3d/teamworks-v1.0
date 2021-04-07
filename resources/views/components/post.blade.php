@@ -19,6 +19,13 @@
                                 More Info</a></small>
                     @endif
                 </p>
+                @can('delete', $post)
+                <form action="{{ route('post.delete', $post) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-sm btn-danger">Delete post</button>
+                </form>
+                @endcan
             </div>
         </div>
     </div>

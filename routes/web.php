@@ -33,7 +33,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return redirect(\route('postsInEnrolledCourses'));
+    return redirect(route('postsInEnrolledCourses'));
 })->name('homepage');
 
 Route::get('/dashboard', function () {
@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/post/{course:name}/create', [PostController::class, 'showCreate'])->name('post.showCreate');
     Route::post('/posts/{course}/create', [PostController::class, 'CreatePost', 'createFile'])->name('post.create');
+    Route::delete('/posts/{post}/delete', [PostController::class, 'delete'])->name('post.delete');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');

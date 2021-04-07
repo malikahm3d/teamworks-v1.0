@@ -20,6 +20,11 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function owner(User $user)
+    {
+        return $this->user_id === $user->id;
+    }
+
     public function course()
     {
         return $this->belongsTo(Course::class);

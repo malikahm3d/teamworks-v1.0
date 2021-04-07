@@ -12,7 +12,7 @@ class PostController extends Controller
     //
     public function PostsInACourse(Course $course)
     {
-        $posts = $course->posts;
+        $posts = $course->posts()->with('user')->orderByDesc('created_at')->get();
         return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
@@ -23,7 +23,7 @@ class PostController extends Controller
     {
         //show posts in enrolled courses
         $regCoursesIds = Course::getCourses($request->user());
-        $posts = Post::all()->whereIn('course_id', $regCoursesIds);
+        $posts = Post::with('user')->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[
             'posts' => $posts
         ]);
@@ -84,11 +84,16 @@ class PostController extends Controller
     public static function ShowPost(Post $post)
     {
 
-//        $comments = $post->comments;
-        $comments = Comment::all()->where('post_id', $post->id);
-//        $comments = Comment::with(['user', 'post'])->where('post_id', $post->id);
-        //dd($comments);
+        $comments = $post->comments()->with('user')->orderByDesc('created_at')->get();
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
+
+    }
+
+    public function delete(Post $post)
+    {
+        $this->authorize('delete', $post);
+        $post->delete();
+        return route('homepage', $post->course);
 
     }
 
