@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class PostPolicy
 {
@@ -70,7 +72,7 @@ class PostPolicy
     public function delete(User $user, Post $post)
     {
         //
-        return $user->id === $post->user_id
+        return $user->id === $post->user_id or $user->hasRole('admin')
             ? Response::allow()
             : Response::deny('You do not own this post.');
     }

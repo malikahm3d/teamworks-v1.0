@@ -35,7 +35,6 @@
             <br /><label><strong>Select Role(s) (CTRL + click for multiple selections):</strong></label><br />
                 <select multiple id="role" name="role[]">
                     @forelse ($roles as $role)
-                    @if($users[$loop->index]->roles->contains($role->id))@endif
                         <option value="{{$role->id}}">{{$role->name}}</option>
                     @empty
                         <option disabled selected value>No Role to Select</option>
