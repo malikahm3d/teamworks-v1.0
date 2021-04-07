@@ -101,41 +101,51 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
 
+    //user routes:
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update')->middleware('can:update,user');
+
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('can:delete,user');
+
+    Route::resource('users', UserController::class);
+
 
 
 
 });
 //Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
 
-Route::group(['middleware' => ['role_or_permission:admin|create role|create permission']],function() {
+Route::middleware(['auth'])->group(function () {
 
     //role routes
-    Route::get('panel', [UserController::class, 'adminPanel'])->name('admin.panel');
-    Route::get('panel/roles/manage', [RoleController::class, 'manage'])->name('roles.manage');
-    Route::patch('panel/roles/', [RoleController::class, 'updateRoles'])->name('roles.updateRoles');
-    Route::get('panel/user/{user}/roles', [UserController::class, 'getRoles'])->name('roles.users');
-    Route::resource('panel/roles', RoleController::class);
+    Route::get('panel', [UserController::class, 'adminPanel'])->name('admin.panel')->middleware(['role:admin']);
+    Route::get('panel/roles/manage', [RoleController::class, 'manage'])->name('roles.manage')->middleware(['role:admin']);
+    Route::patch('panel/roles/', [RoleController::class, 'updateRoles'])->name('roles.updateRoles')->middleware(['role:admin']);
+    Route::get('panel/user/{user}/roles', [UserController::class, 'getRoles'])->name('roles.users')->middleware(['role:admin']);
+    Route::resource('panel/roles', RoleController::class)->middleware(['role:admin']);;
 
     //permission routes
-    Route::get('panel/permissions/manage', [PermissionController::class, 'manage'])->name('permissions.manage');
-    Route::patch('panel/permissions/', [PermissionController::class, 'updatePermissions'])->name('permissions.updatePermissions');
-    Route::get('panel/user/{user}/permissions', [UserController::class, 'getPermissions'])->name('permissions.users');
-    Route::resource('panel/permissions', PermissionController::class);
+    Route::get('panel/permissions/manage', [PermissionController::class, 'manage'])->name('permissions.manage')->middleware(['role:admin']);;
+    Route::patch('panel/permissions/', [PermissionController::class, 'updatePermissions'])->name('permissions.updatePermissions')->middleware(['role:admin']);;
+    Route::get('panel/user/{user}/permissions', [UserController::class, 'getPermissions'])->name('permissions.users')->middleware(['role:admin']);;
+    Route::resource('panel/permissions', PermissionController::class)->middleware(['role:admin']);;
 
     //organization route
-    Route::get('panel/organization/', [UserController::class, 'univeristiesOrganizations'])->name('admin.panel.organization');
+    Route::get('panel/organization/', [UserController::class, 'univeristiesOrganizations'])->name('admin.panel.organization')->middleware(['role:admin|moderator']);;
 
     //university routes
-    Route::resource('panel/organization/universities', UniversityController::class);
+    Route::resource('panel/organization/universities', UniversityController::class)->middleware(['role:admin']);;
 
     //faculty routes
-    Route::resource('panel/organization/faculties', FacultyController::class);
+    Route::resource('panel/organization/faculties', FacultyController::class)->middleware(['role:admin']);;
 
     //department routes
-    Route::resource('panel/organization/departments', DepartmentController::class);
+    Route::resource('panel/organization/departments', DepartmentController::class)->middleware(['role:admin']);;
 
     //course routes
-    Route::resource('panel/organization/courses', CourseController::class);
+    Route::resource('panel/organization/courses', CourseController::class)->middleware(['role:admin|moderator']);;
 
 
 });
@@ -144,4 +154,4 @@ Route::group(['middleware' => ['role_or_permission:admin|create role|create perm
 Route::get('university/{university}/faculties', [UniversityController::class, 'getFaculties'])->name('universities.faculties');
 Route::get('faculty/{faculty}/departments', [FacultyController::class, 'getDepartments'])->name('faculties.departments');
 
-Route::resource('users', UserController::class);
+

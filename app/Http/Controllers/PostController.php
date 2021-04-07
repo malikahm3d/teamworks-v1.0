@@ -55,7 +55,7 @@ class PostController extends Controller
 
         $this->createFile($newPost, $request);
 
-        return redirect(route('showPost', $newPost));
+        return redirect(route('showPost', $newPost))->with('message', 'Post Created Successfully!');
 
     }
 
@@ -92,8 +92,13 @@ class PostController extends Controller
     public function delete(Post $post)
     {
         $this->authorize('delete', $post);
+        $course = $post->course;
+        if(!is_null($post->file)) $post->file->delete();
+        $post->comments()->each(function($comment) {
+            $comment->delete(); // <-- direct deletion
+         });
         $post->delete();
-        return route('homepage', $post->course);
+        return redirect(route('postsInACourse', $course))->with('message', 'Post Deleted Successfully!');
 
     }
 
@@ -118,7 +123,7 @@ class PostController extends Controller
         $newPost->save();
 
 
-        return redirect(route('showPost', $newPost));
+        return redirect(route('showPost', $newPost))->with('message', 'Post Updated Successfully!');
 
     }
 

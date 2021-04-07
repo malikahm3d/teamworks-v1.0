@@ -13,7 +13,7 @@ class UserController extends Controller
 
     public function __construct() {
         $this->middleware('role:admin')->only('create');
-        $this->middleware('role:admin')->only('adminPanel');
+        $this->middleware(['role:admin|moderator'])->only('adminPanel');
         $this->middleware('can:update,user')->only(['edit', 'update']);
         $this->middleware('can:delete,user')->only('destroy');
     }
@@ -31,8 +31,8 @@ class UserController extends Controller
     public function adminPanel()
     {
         $user = auth()->user();
-        if($user->hasRole('admin'))
-            return view('admin.home');
+        if($user->hasAnyRole(['admin', 'moderator']))
+            return view('admin.home', compact('user'));
     }
 
     public function univeristiesOrganizations()
