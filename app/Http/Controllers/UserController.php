@@ -78,6 +78,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
@@ -90,6 +91,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('update', $user);
         $user->update(['name' => $request->name,
         'username' => $request->username,
         'email' => $request->email,]);
@@ -105,6 +107,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request, User $user)
     {
+        $this->authorize('delete', $user);
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -124,7 +127,7 @@ class UserController extends Controller
     {
         return $user->roles;
     }
-    
+
     public function getPermissions(User $user)
     {
         return $user->getAllPermissions();
