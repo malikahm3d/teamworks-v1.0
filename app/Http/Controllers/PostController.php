@@ -99,11 +99,14 @@ class PostController extends Controller
 
     public function showEdit(Post $post)
     {
+        $this->authorize('update', $post);
         return view('courses.posts.edit', ['post' => $post]);
     }
 
     public function edit(Post $post, Request $request)
     {
+        $this->authorize('update', $post);
+
         $this->validate($request, [
             'title' => ['required'],
             'body' => ['required']
