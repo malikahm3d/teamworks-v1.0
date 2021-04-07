@@ -97,4 +97,26 @@ class PostController extends Controller
 
     }
 
+    public function showEdit(Post $post)
+    {
+        return view('courses.posts.edit', ['post' => $post]);
+    }
+
+    public function edit(Post $post, Request $request)
+    {
+        $this->validate($request, [
+            'title' => ['required'],
+            'body' => ['required']
+        ]);
+
+        $newPost = Post::find($post->id);
+        $newPost->title = $request->title;
+        $newPost->body = $request->body;
+        $newPost->save();
+
+
+        return redirect(route('showPost', $newPost));
+
+    }
+
 }

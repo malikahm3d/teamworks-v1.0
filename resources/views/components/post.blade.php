@@ -19,13 +19,21 @@
                                 More Info</a></small>
                     @endif
                 </p>
-                @can('delete', $post)
-                <form action="{{ route('post.delete', $post) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-sm btn-danger">Delete post</button>
-                </form>
-                @endcan
+                @if(Route::is('showPost'))
+                    @can('delete', $post)
+                        <form action="{{ route('post.delete', $post) }}" method="POST" class="m-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-sm btn-danger">Delete post</button>
+                        </form>
+                    @endcan
+                    @can('update', $post)
+                            <form action="{{ route('post.showEdit', $post) }}" method="GET" class="m-2">
+                                <button type="submit" class="btn-sm btn-info text-center">Edit post</button>
+                            </form>
+{{--                        <a href="{{ route('post.showEdit', $post) }}"  class="btn-sm btn-info">Edit post</a>--}}
+                    @endcan
+                @endif
             </div>
         </div>
     </div>
