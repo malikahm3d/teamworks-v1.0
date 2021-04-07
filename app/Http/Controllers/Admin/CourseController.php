@@ -13,7 +13,15 @@ class CourseController extends Controller
     public function index()
     {
         //dd(auth()->user()->department->department);
-        $courses = Course::all();
+        //dd(Course::where('department_id',auth()->user()->department_id)->get());
+        if(auth()->user()->hasRole('admin')){
+            $courses = Course::all();
+
+        }
+        if(auth()->user()->hasRole('moderator'))
+        {
+            $courses = Course::where('department_id',auth()->user()->department_id)->get();
+        }
         return view('admin.organization.course.index', compact('courses'));
     }
 
@@ -24,7 +32,14 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $departments = Department::all();
+        //dd(Department::firstWhere('id',auth()->user()->department_id));
+        if (auth()->user()->hasRole('admin')) {
+            $departments = Department::all();
+        }
+
+        if (auth()->user()->hasRole('moderator')) {
+            $departments = Department::where('id',auth()->user()->department_id)->get();
+        }
         return view('admin.organization.course.create', compact('departments'));
     }
 

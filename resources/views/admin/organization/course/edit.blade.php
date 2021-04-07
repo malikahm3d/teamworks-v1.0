@@ -22,7 +22,7 @@
 
             <!-- department name -->
             <div>
-                <x-label for="faculty_name" :value="__('Department: '). $course->department->name" /><br>
+                <x-label for="department_name" :value="__('Department: '). $course->department->name" /><br>
             </div>
 
             <!-- name -->

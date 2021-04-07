@@ -58,6 +58,21 @@
                         </ul>
                     </li>
                     @endrole
+                    @role('moderator')
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            Moderator Panel
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('courses.index') }}">
+                                        {{ __('Manage Courses') }}
+                                    </a>
+                                </li>
+
+                        </ul>
+                    </li>
+                    @endrole
                     @endif
                     @if(!Route::is('dashboard'))
                     <li class="nav-item">
@@ -88,6 +103,9 @@
                         </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
+                                     <a class="dropdown-item" href="{{route('users.edit', Auth::user()->id)}}">{{ __('Edit') }}</a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
@@ -98,9 +116,7 @@
                                         @csrf
                                     </form>
                                 </li>
-                                <li>
-                                     <a class="dropdown-item" href="{{route('users.edit', Auth::user()->id)}}">{{ __('Edit') }}</a>
-                                </li>
+                                
                             </ul>
                     </li>
                 @endguest

@@ -23,16 +23,17 @@
             </div>
 
             <!-- Department -->
-
             <div class="">
                 <label><strong>Department:</strong></label><br />
                 <select class="selectpicker" data-live-search="true" id="department" name="department" required>
-                    <option value="" selected disabled hidden>Select one Department</option>
+                    <option value="" selected disabled hidden>Select Department</option>
                     @foreach ($departments as $department)
                         <option value="{{$department->id}}" >{{$department->id. '. ' .$department->name. ' ('.$department->faculty->university->name.')'}}</option>
                     @endforeach
                 </select>
             </div>
+            <br>
+            
 
 
             <div class="flex items-center justify-end mt-4">
