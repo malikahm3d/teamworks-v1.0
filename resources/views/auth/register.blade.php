@@ -59,7 +59,7 @@
 
             <div>
                 <!-- University -->
-                <br><select name="university" id="university" required>
+                <br><select name="university" id="university" required style="width: 200px">
                     <option value="" selected disabled hidden >Select University</option>
                     @forelse($allUniversities as $uni)
                     <option value="{{ $uni->id }}" {{ (isset($chosenUniversity) && $chosenUniversity == $uni ? 'selected':'') }}>{{ $uni->name }}</option>
@@ -69,7 +69,7 @@
                 </select>
 
                 <!-- Faculty -->
-                <select name="faculty" id="faculty" required>
+                <select name="faculty" id="faculty" required style="width: 200px">
                     <option value="" selected disabled hidden>Select faculty</option>
                     @forelse($allFaculties as $fac)
                     <option value="{{ $fac->id }}" {{ (isset($chosenFaculty) && $chosenFaculty == $fac ? 'selected':'') }}>{{ $fac->name }}</option>
@@ -79,7 +79,7 @@
                 </select>
 
                 <!-- Department -->
-                <select name="department" id="department" required>
+                <select name="department" id="department" required style="width: 200px">
                     <option value="" selected disabled hidden>Select department</option>
                     @forelse($allDepartments as $dep)
                     <option value="{{ $dep->id }}" {{ (isset($chosenDepartment) && $chosenDepartment == $dep ? 'selected':'') }}>{{ $dep->name }}</option>
