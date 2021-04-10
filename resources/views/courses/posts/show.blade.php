@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', e($post->title))
+{{--@section('title', e($post->title))--}}
 @section('content')
 
     <x-post :post="$post"/>

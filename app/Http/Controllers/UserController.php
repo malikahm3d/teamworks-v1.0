@@ -97,6 +97,7 @@ class UserController extends Controller
         $user->update(['name' => $request->name,
         'username' => $request->username,
         'email' => $request->email,]);
+        //TODO data validation
         //dd($request->all());
         return redirect(route('dashboard'))->with('message', 'User Updated successfully!');
     }

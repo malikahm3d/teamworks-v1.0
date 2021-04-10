@@ -26,7 +26,7 @@ class PostController extends Controller
         //improve enrollments model to remove redundancies from this query and create post preview component
         //the current post component is loading things we don't need in the preview cards.
         $regCoursesIds = Course::getCourses($request->user());
-        $posts = Post::with(['user', 'comments', 'file'])->whereIn('course_id', $regCoursesIds)->get();
+        $posts = Post::with('user')->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[
             'posts' => $posts
         ]);
@@ -73,6 +73,7 @@ class PostController extends Controller
 
         if($request->file()) {
             $fileName = time().'_'.$request->file->getClientOriginalName();
+            //TODO add random string to name.
             $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
 
             $fileModel->name = time().'_'.$request->file->getClientOriginalName();
