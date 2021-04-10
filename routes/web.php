@@ -98,7 +98,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'showEdit'])->name('post.showEdit')->middleware('can:update,post');
     Route::patch('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('can:update,post');
 
-    Route::post('/posts/{post}/comment/{comment}answer', [PostController::class, 'answer'])->name('post.answer');
+    Route::post('/posts/comment/answer', [PostController::class, 'answer'])->name('post.answer');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');

@@ -12,7 +12,7 @@ class PostController extends Controller
     //
     public function PostsInACourse(Course $course)
     {
-        $posts = $course->posts()->with('user')->orderByDesc('created_at')->get();
+        $posts = $course->posts()->with(['user', 'comments', 'file'])->orderByDesc('created_at')->get();
         return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
@@ -22,8 +22,11 @@ class PostController extends Controller
     public function PostsInEnrolledCourses(Request $request)
     {
         //show posts in enrolled courses
+        //TODO optimize this querying
+        //improve enrollments model to remove redundancies from this query and create post preview component
+        //the current post component is loading things we don't need in the preview cards.
         $regCoursesIds = Course::getCourses($request->user());
-        $posts = Post::with('user')->whereIn('course_id', $regCoursesIds)->get();
+        $posts = Post::with(['user', 'comments', 'file'])->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[
             'posts' => $posts
         ]);
@@ -84,7 +87,7 @@ class PostController extends Controller
     public static function ShowPost(Post $post)
     {
 
-        $comments = $post->comments()->with('user')->orderByDesc('created_at')->get();
+        $comments = $post->comments()->with(['user', 'replies'])->orderByDesc('created_at')->get();
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
 
     }
@@ -127,14 +130,17 @@ class PostController extends Controller
 
     }
 
-    public function answer(Post $post, Comment $comment)
+    public function answer(Request $request)
     {
 
-        $postt = Post::find($post->id);
-        $postt->comment_id = $comment->id;
-        $postt->save();
+        $post = Post::find($request->post_id);
+        $post->comment_id = $request->comment_id;
+        $post->save();
 
-        return back();
+        //return response()->json(['success'=>'Closed Thread.']);
+        return redirect(route('showPost', [
+            'post' => $post,
+        ]));
     }
 
 }

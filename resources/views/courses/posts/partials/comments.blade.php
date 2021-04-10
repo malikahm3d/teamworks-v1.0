@@ -2,10 +2,13 @@
     <div id="test" class="border rounded p-2 m-2 mb-5">
         <strong class="font-light">{{ $comment->user->name }}</strong>
         <p class="text-lg" id="comment_body">{{ $comment->body }}</p>
+
         @if($post->owner(auth()->user()) && !isset($post->comment_id))
-            <form action="{{ route('post.answer', [$post, $comment]) }}" method="POST" class="m-2 d-inline">
+            <form action="{{ route('post.answer') }}" method="POST" class="m-2 d-inline">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <button type="submit" class="btn-info btn-sm">Does this Answer your Question?</button>
+                <input type="hidden" id="post_id" name="post_id" value="{{ $post->id }}">
+                <input type="hidden" id="comment_id" name="comment_id" value="{{ $comment->id }}">
+                <button type="submit" id="close_thread" class="btn-info btn-sm">Does this Answer your Question?</button>
             </form>
         @endif
 
@@ -35,11 +38,24 @@
             </div>
         </div>
     </div>
-<script>
-    @if($comment->id === $post->comment_id)
-        document.getElementById('test').prepend('Answer: \n');
-        document.getElementById('comment_body').classList.add('font-weight-bold')
-    @endif
-</script>
+{{--    <script type="text/javascript">--}}
+{{--        $(document).ready(function() {--}}
+{{--            $("#close_thread").click(function(e){--}}
+{{--                e.preventDefault();--}}
+
+{{--                let _token = $("input[name='_token']").val();--}}
+{{--                let post_id = $("#post_id").val();--}}
+{{--                let comment_id = $("#comment_id").val();--}}
+
+{{--                $.ajax({--}}
+{{--                    url: "{{ route('post.answer') }}",--}}
+{{--                    type:'POST',--}}
+{{--                    data: {_token:_token, post_id:post_id, comment_id:comment_id},--}}
+{{--                    success:function(response){--}}
+{{--                        console.log(response);--}}
+{{--                    },--}}
+{{--                });--}}
+{{--            })});--}}
+{{--    </script>--}}
 @empty
 @endforelse
