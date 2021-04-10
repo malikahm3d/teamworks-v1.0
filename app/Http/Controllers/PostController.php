@@ -12,7 +12,7 @@ class PostController extends Controller
     //
     public function PostsInACourse(Course $course)
     {
-        $posts = $course->posts()->with('user')->orderByDesc('created_at')->get();
+        $posts = $course->posts()->withLikes()->with('user')->orderByDesc('created_at')->get();
         return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
@@ -23,7 +23,7 @@ class PostController extends Controller
     {
         //show posts in enrolled courses
         $regCoursesIds = Course::getCourses($request->user());
-        $posts = Post::with('user')->whereIn('course_id', $regCoursesIds)->get();
+        $posts = Post::withLikes()->with('user')->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[
             'posts' => $posts
         ]);
@@ -83,6 +83,7 @@ class PostController extends Controller
 
     public static function ShowPost(Post $post)
     {
+        $post = $post->likeableWithLikes($post->id)->firstOrFail();
 
         $comments = $post->comments()->with('user')->orderByDesc('created_at')->get();
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
@@ -125,6 +126,28 @@ class PostController extends Controller
 
         return redirect(route('showPost', $newPost))->with('message', 'Post Updated Successfully!');
 
+    }
+
+    public function like(Post $post)
+    {
+
+        $post = $post->likeableWithLikes($post->id)->firstOrFail();
+        $post->like(auth()->user());
+
+        return back();
+    }
+
+    public function dislike(Post $post)
+    {
+        $post = $post->likeableWithLikes($post->id)->firstOrFail();
+        $post->dislike(auth()->user());
+
+        return back();
+    }
+    public function destroyLike(Post $post)
+    {
+        $post->unlike(auth()->user());
+        return back();
     }
 
 }
