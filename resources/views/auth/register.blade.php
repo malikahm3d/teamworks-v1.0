@@ -14,7 +14,7 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register') }}">
+        <form method="POST" action="{{ route('register') }}" style="width: 500px">
             @csrf
 
             <!-- Name -->
@@ -59,37 +59,51 @@
 
             <div>
                 <!-- University -->
-                <br><select name="university" id="university" required style="width: 200px">
-                    <option value="" selected disabled hidden >Select University</option>
-                    @forelse($allUniversities as $uni)
-                    <option value="{{ $uni->id }}" {{ (isset($chosenUniversity) && $chosenUniversity == $uni ? 'selected':'') }}>{{ $uni->name }}</option>
-                    @empty
-                    <option disabled selected value>No University to Select</option>
-                    @endforelse
-                </select>
+                <div>
+                    <label for="university">Select University</label>
+                    <br><select name="university" id="university" required style="width: 200px">
+                        <option value="" selected disabled hidden>Select University</option>
+                        @forelse($allUniversities as $uni)
+                            <option
+                                value="{{ $uni->id }}" {{ (isset($chosenUniversity) && $chosenUniversity == $uni ? 'selected':'') }}>{{ $uni->name }}</option>
+                        @empty
+                            <option disabled selected value>No University to Select</option>
+                        @endforelse
+                    </select>
+                </div>
 
                 <!-- Faculty -->
-                <select name="faculty" id="faculty" required style="width: 200px">
-                    <option value="" selected disabled hidden>Select faculty</option>
-                    @forelse($allFaculties as $fac)
-                    <option value="{{ $fac->id }}" {{ (isset($chosenFaculty) && $chosenFaculty == $fac ? 'selected':'') }}>{{ $fac->name }}</option>
-                    @empty
-                    <option disabled selected value>No Faculties to Select</option>
-                    @endforelse
-                </select>
+                <div>
+                    <label for="faculty">Select Faculties</label> <br>
+                    <select name="faculty" id="faculty" required style="width: 200px">
+                        <option value="" selected disabled hidden>Select faculty</option>
+                        @forelse($allFaculties as $fac)
+                            <option
+                                value="{{ $fac->id }}" {{ (isset($chosenFaculty) && $chosenFaculty == $fac ? 'selected':'') }}>{{ $fac->name }}</option>
+                        @empty
+                            <option disabled selected value>No Faculties to Select</option>
+                        @endforelse
+                    </select>
+                </div>
 
                 <!-- Department -->
-                <select name="department" id="department" required style="width: 200px">
-                    <option value="" selected disabled hidden>Select department</option>
-                    @forelse($allDepartments as $dep)
-                    <option value="{{ $dep->id }}" {{ (isset($chosenDepartment) && $chosenDepartment == $dep ? 'selected':'') }}>{{ $dep->name }}</option>
-                    @empty
-                    <option disabled selected value>No Departments to Select</option>
-                    @endforelse
-                </select>
+                <label for="department">Select Derpartment</label>
+                <div>
+                    <select name="department" id="department" required style="width: 200px">
+                        <option value="" selected disabled hidden>Select department</option>
+                        @forelse($allDepartments as $dep)
+                            <option
+                                value="{{ $dep->id }}" {{ (isset($chosenDepartment) && $chosenDepartment == $dep ? 'selected':'') }}>{{ $dep->name }}</option>
+                        @empty
+                            <option disabled selected value>No Departments to Select</option>
+                        @endforelse
+                    </select>
+                </div>
+                <br>
 
                 <!-- Role -->
-                <br><br><select name="role" id="role" required>
+                <label for="role">Select Role</label>
+                <br><select name="role" id="role" required>
                     <option value="" selected disabled hidden >Select Role</option>
                     @forelse($roles as $role)
                     <option value="{{ $role->id }}">{{ $role->name }}</option>

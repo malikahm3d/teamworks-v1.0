@@ -98,10 +98,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'showEdit'])->name('post.showEdit')->middleware('can:update,post');
     Route::patch('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('can:update,post');
 
+
     Route::patch('/posts/{post}/like', [PostController::class, 'like'])->name('post.like');
     Route::patch('/posts/{post}/dislike', [PostController::class, 'dislike'])->name('post.dilike');
     Route::delete('/posts/{post}/like', [PostController::class, 'destroyLike'])->name('post.unlike');
     Route::delete('/posts/{post}/dislike', [PostController::class, 'destroyLike'])->name('post.undislike');
+    Route::post('/posts/comment/answer', [PostController::class, 'answer'])->name('post.answer');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
 
@@ -111,6 +113,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/comments/{comment}/dislike', [CommentController::class, 'destroyLike'])->name('comment.undislike');
 
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
+
 
     //user routes:
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
