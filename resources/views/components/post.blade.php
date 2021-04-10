@@ -6,8 +6,18 @@
                 <span class="text-sm">{{ $post->created_at->diffForHumans() }}</span>
                 <p class="text-black-50 mt-2 mb-2 border-secondary">{{ $post->title }}</p>
                 <p class="text-black-100 mt-2 mb-2 border-secondary text-body">{!! $post->body !!}</p>
+                @if($post->file)
+                    <button
+                        class="btn btn-outline-dark btn-sm py-0 mb-2" style="font-size: 0.8em" type="button"
+                        data-toggle="collapse" data-target="#collapse_target" aria-expanded="false"
+                        aria-controls="multiCollapseExample2">
+                        Show image
+                    </button>
                 @if($post->file && Route::is('showPost'))
-                    <img src="{{$post->file->file_path}}" class="img-fluid">
+                        <div id="collapse_target" class="collapse">
+                            <img src="{{$post->file->file_path}}" class="img-fluid">
+                        </div>
+                @endif
                 @endif
                 <p class="card-text">
                     @if(!Route::is('postsInACourse'))

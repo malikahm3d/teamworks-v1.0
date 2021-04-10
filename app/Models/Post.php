@@ -41,4 +41,9 @@ class Post extends Model
         return $this->hasOne(File::class);
     }
 
+    public function answered()
+    {
+        return $this->commnt_id != null;
+    }
+
 }
