@@ -153,6 +153,7 @@ class PostController extends Controller
     {
         $post->unlike(auth()->user());
         return back();
+    }
 
     public function answer(Request $request)
     {

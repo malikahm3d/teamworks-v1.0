@@ -36,34 +36,27 @@
             <div class="col-md-12">
                 @include('courses.posts.partials.comments', ['comments' => $comment->replies])
             </div>
-        </form>
-    </div>
-
-    <div class="row-cols-md-4">
-        <div class="col-md-12">
-            @include('courses.posts.partials.comments', ['comments' => $comment->replies])
         </div>
     </div>
-</div>
 
-{{--    <script type="text/javascript">--}}
-{{--        $(document).ready(function() {--}}
-{{--            $("#close_thread").click(function(e){--}}
-{{--                e.preventDefault();--}}
+    {{--    <script type="text/javascript">--}}
+    {{--        $(document).ready(function() {--}}
+    {{--            $("#close_thread").click(function(e){--}}
+    {{--                e.preventDefault();--}}
 
-{{--                let _token = $("input[name='_token']").val();--}}
-{{--                let post_id = $("#post_id").val();--}}
-{{--                let comment_id = $("#comment_id").val();--}}
+    {{--                let _token = $("input[name='_token']").val();--}}
+    {{--                let post_id = $("#post_id").val();--}}
+    {{--                let comment_id = $("#comment_id").val();--}}
 
-{{--                $.ajax({--}}
-{{--                    url: "{{ route('post.answer') }}",--}}
-{{--                    type:'POST',--}}
-{{--                    data: {_token:_token, post_id:post_id, comment_id:comment_id},--}}
-{{--                    success:function(response){--}}
-{{--                        console.log(response);--}}
-{{--                    },--}}
-{{--                });--}}
-{{--            })});--}}
-{{--    </script>--}}
+    {{--                $.ajax({--}}
+    {{--                    url: "{{ route('post.answer') }}",--}}
+    {{--                    type:'POST',--}}
+    {{--                    data: {_token:_token, post_id:post_id, comment_id:comment_id},--}}
+    {{--                    success:function(response){--}}
+    {{--                        console.log(response);--}}
+    {{--                    },--}}
+    {{--                });--}}
+    {{--            })});--}}
+    {{--    </script>--}}
 @empty
 @endforelse

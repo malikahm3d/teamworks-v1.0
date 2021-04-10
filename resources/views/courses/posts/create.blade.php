@@ -28,6 +28,12 @@
         // const tinymce = require("tinymce");
         tinymce.init({
             selector: '#PostBody',
+            protect: [
+                /\<\/?(if|endif)\>/g,  // Protect <if> & </endif>
+                /\<xsl\:[^>]+\>/g,  // Protect <xsl:...>
+                /<\?php.*?\?>/g, // Protect php code
+            ],
+            valid_elements : 'a[href|target=_blank],strong/b,div[align],br'
         });
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {

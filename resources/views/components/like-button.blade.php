@@ -11,7 +11,7 @@
 
         <div class="flex items-center mr-4 {{$likeable->isLikedBy(auth()->user())? 'text-blue-500' : 'text-gray-500'}}">
             <svg viewBox="0 0 20 20"
-                 class="mr-1 w-3"
+                 class="mr-1 mb-3 w-3"
             >
                 <g id="Page-1"
                    stroke="none"
@@ -35,7 +35,7 @@
             </button>
         </div>
 
-        
+
     </form>
 
     <form method="POST"
@@ -51,7 +51,7 @@
 
         <div id="dislike_div"class="flex items-center {{$likeable->isDislikedBy(auth()->user())? 'text-blue-500' : 'text-gray-500'}}">
             <svg viewBox="0 0 20 20"
-                 class="mr-1 w-3"
+                 class="mr-1 mb-3 w-3"
             >
                 <g id="Page-1"
                    stroke="none"
@@ -75,5 +75,5 @@
             </button>
         </div>
     </form>
-    
+
 </div>

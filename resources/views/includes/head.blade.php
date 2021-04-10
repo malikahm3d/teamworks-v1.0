@@ -1,6 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+{{--    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://ajax.googleapis.com https://cdn.tiny.cloud/1/lwiu8vmkfj3mu07j85iaqiqy49kg6cgz6s54o58wp4svmivb https://maxcdn.bootstrapcdn.com https://cdn.jsdelivr.net https://code.jquery.com">--}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
