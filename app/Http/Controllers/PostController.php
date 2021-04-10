@@ -127,4 +127,14 @@ class PostController extends Controller
 
     }
 
+    public function answer(Post $post, Comment $comment)
+    {
+
+        $postt = Post::find($post->id);
+        $postt->comment_id = $comment->id;
+        $postt->save();
+
+        return back();
+    }
+
 }
