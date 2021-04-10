@@ -22,29 +22,30 @@
                 @endif
                 <p class="card-text">
                     @if(!Route::is('postsInACourse'))
-                        <small class="text-info text-sm-start"><a href="{{ route('postsInACourse', $post->course) }}">
-                                In: {{ $post->course->name }}</a></small>
+                    <small class="text-info text-sm-start"><a href="{{ route('postsInACourse', $post->course) }}">
+                            In: {{ $post->course->name }}</a></small>
                     @endif
                     @if(!Route::is('showPost'))
-                        <small class="text-info text-sm-start"><a href="{{ route('showPost', $post) }}">
-                                More Info</a></small>
+                    <small class="text-info text-sm-start"><a href="{{ route('showPost', $post) }}">
+                            More Info</a></small>
                     @endif
                 </p>
                 @if(Route::is('showPost'))
-                    @can('delete', $post)
-                        <form action="{{ route('post.delete', $post) }}" method="POST" class="m-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-sm btn-danger">Delete post</button>
-                        </form>
-                    @endcan
-                    @can('update', $post)
-                            <form action="{{ route('post.showEdit', $post) }}" method="GET" class="m-2">
-                                <button type="submit" class="btn-sm btn-info text-center">Edit post</button>
-                            </form>
-{{--                        <a href="{{ route('post.showEdit', $post) }}"  class="btn-sm btn-info">Edit post</a>--}}
-                    @endcan
+                @can('delete', $post)
+                <form action="{{ route('post.delete', $post) }}" method="POST" class="m-2">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn-sm btn-danger">Delete post</button>
+                </form>
+                @endcan
+                @can('update', $post)
+                <form action="{{ route('post.showEdit', $post) }}" method="GET" class="m-2">
+                    <button type="submit" class="btn-sm btn-info text-center">Edit post</button>
+                </form>
+                {{-- <a href="{{ route('post.showEdit', $post) }}" class="btn-sm btn-info">Edit post</a>--}}
+                @endcan
                 @endif
+                @include('components.like-button', ['likeables' => 'posts', 'likeable_id' => $post->id, 'likeable'=> $post])
             </div>
         </div>
     </div>

@@ -54,4 +54,27 @@ class CommentController extends Controller
         return back();
 
     }
+
+    public function like(Comment $comment)
+    {
+        $comment = $comment->likeableWithLikes($comment->id)->firstOrFail();
+        
+        
+        $comment->like(auth()->user());
+
+        return back();
+    }
+
+    public function dislike(Comment $comment)
+    {
+        $comment = $comment->likeableWithLikes($comment->id)->firstOrFail();
+        $comment->dislike(auth()->user());
+
+        return back();
+    }
+    public function destroyLike(Comment $comment)
+    {
+        $comment->unlike(auth()->user());
+        return back();
+    }
 }

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\Likeable;
 
 class Comment extends Model
 {
+    use Likeable;
 
     protected $guarded = [];
 

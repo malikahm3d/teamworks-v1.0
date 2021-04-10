@@ -12,7 +12,8 @@ class PostController extends Controller
     //
     public function PostsInACourse(Course $course)
     {
-        $posts = $course->posts()->with(['user', 'comments', 'file'])->orderByDesc('created_at')->get();
+
+        $posts = $course->posts()->withLikes()->with(['user', 'comments', 'file'])->orderByDesc('created_at')->get();
         return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
@@ -26,7 +27,7 @@ class PostController extends Controller
         //improve enrollments model to remove redundancies from this query and create post preview component
         //the current post component is loading things we don't need in the preview cards.
         $regCoursesIds = Course::getCourses($request->user());
-        $posts = Post::with('user')->whereIn('course_id', $regCoursesIds)->get();
+        $posts = Post::withLikes()->with('user')->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[
             'posts' => $posts
         ]);
@@ -87,6 +88,7 @@ class PostController extends Controller
 
     public static function ShowPost(Post $post)
     {
+        $post = $post->likeableWithLikes($post->id)->firstOrFail();
 
         $comments = $post->comments()->with(['user', 'replies'])->orderByDesc('created_at')->get();
         return view('courses.posts.show', ['post' => $post, 'comments' => $comments]);
@@ -131,6 +133,27 @@ class PostController extends Controller
 
     }
 
+    public function like(Post $post)
+    {
+
+        $post = $post->likeableWithLikes($post->id)->firstOrFail();
+        $post->like(auth()->user());
+
+        return back();
+    }
+
+    public function dislike(Post $post)
+    {
+        $post = $post->likeableWithLikes($post->id)->firstOrFail();
+        $post->dislike(auth()->user());
+
+        return back();
+    }
+    public function destroyLike(Post $post)
+    {
+        $post->unlike(auth()->user());
+        return back();
+
     public function answer(Request $request)
     {
 
@@ -142,6 +165,7 @@ class PostController extends Controller
         return redirect(route('showPost', [
             'post' => $post,
         ]));
+
     }
 
 }

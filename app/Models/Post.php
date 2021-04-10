@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\Likeable;
 
 class Post extends Model
 {
     use HasFactory;
+    use Likeable;
+
 
     protected $fillable = [
         'title',
@@ -40,6 +43,7 @@ class Post extends Model
     {
         return $this->hasOne(File::class);
     }
+
 
     public function answered()
     {
