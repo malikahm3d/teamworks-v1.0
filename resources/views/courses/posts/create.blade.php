@@ -2,6 +2,15 @@
 @section('title', 'Create Post')
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row m-4 mb-5">
         <div class="col-6 offset-3">
             <h1 class="text-center">New Post!</h1>
@@ -18,7 +27,7 @@
                 </div>
                 {{--                TODO add role restriction for tutor only--}}
                 <div class="form-group d-block fas fa-folder fa-1.5x">
-                    <input name="file" id="file" type="file" style="display: none"/>
+                    <input name="filenames[]" id="file" type="file" style="display: none" multiple/>
                     <button type="button" onclick="document.getElementById('file').click()">Upload Attachment</button>
                 </div>
                 <button class="btn btn-info mb-2 btn-block ">Submit</button>
