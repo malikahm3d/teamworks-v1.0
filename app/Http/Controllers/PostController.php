@@ -63,15 +63,14 @@ class PostController extends Controller
 
     public function createFile(Post $post, Request $request)
     {
-        //dd($request->file('filenames'));
 
         $this->validate($request, [
-            'file' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,xlx,xlsx', 'max:1999']
+            'filenames' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,svg,xlx,xlsx,zip,rar,txt', 'max:1999']
         ]);
-        $filesarray = [];
 
         if($request->file('filenames')) {
-            foreach($request->file('filenames') as $file) {
+            try {
+                foreach($request->file('filenames') as $file) {
                     $fileModel = new \App\Models\File();
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $filePath = $file->storeAs('uploads', $fileName, 'public');
@@ -82,8 +81,10 @@ class PostController extends Controller
                     $post->file()->save($fileModel);
 
 
+                }
+            } catch (\Throwable $e){
+                return back()->with('message', 'File Upload Failed');
             }
-            //dd($filesarray);
         }
 
 
