@@ -13,7 +13,7 @@ class PostController extends Controller
     public function PostsInACourse(Course $course)
     {
 
-        $posts = $course->posts()->withLikes()->with(['user', 'comments', 'file'])->orderByDesc('created_at')->get();
+        $posts = $course->posts()->orderBy('created_at', 'desc')->withLikes()->with('user')->get();
         return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
@@ -24,8 +24,6 @@ class PostController extends Controller
     {
         //show posts in enrolled courses
         //TODO optimize this querying
-        //improve enrollments model to remove redundancies from this query and create post preview component
-        //the current post component is loading things we don't need in the preview cards.
         $regCoursesIds = Course::getCourses($request->user());
         $posts = Post::withLikes()->with('user')->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[

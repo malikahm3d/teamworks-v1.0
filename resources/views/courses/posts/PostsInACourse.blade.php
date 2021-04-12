@@ -2,12 +2,20 @@
 @section('title', e($course->name))
 @section('content')
 
-
-    <a href="{{route('post.showCreate', $course)}}">Create Post!</a>
-
+    <div class="flex flex-col">
+        <h2 class="text-center font-weight-bold text-capitalize text-info text-opacity-75">
+            {{ $course->name }}
+        </h2>
+        <span class="text-center font-weight-bold text-capitalize text-info text-opacity-75 m-2 ">
+            <a href="{{ route('post.showCreate', $course) }}" type="button" class="btn btn-info">
+                <i class="far fa-plus-square text-white mr-1"></i>
+                Create Post!
+            </a>
+        </span>
+    </div>
     @if($posts->count())
         @foreach($posts as $post)
-            <x-post :post="$post"/>
+            <x-PostPreview :post="$post"/>
         @endforeach
     @else
         <p class="text-center text-danger text-md-center">There are no posts in this course</p>

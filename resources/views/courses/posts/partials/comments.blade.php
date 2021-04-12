@@ -1,5 +1,5 @@
 @forelse($comments as $i => $comment)
-    <div id="test" class="border rounded p-2 m-2 mb-5">
+    <div id="test" class="border rounded p-2 m-2 mb-2">
         <strong class="font-light">{{ $comment->user->name }}</strong>
         <p class="text-lg" id="comment_body">{{ $comment->body }}</p>
         @include('components.like-button', ['likeables' => 'comments', 'likeable_id' => $comment->id, 'likeable'=> $comment->likeableWithLikes($comment->id)->firstOrFail()])
@@ -38,25 +38,5 @@
             </div>
         </div>
     </div>
-
-    {{--    <script type="text/javascript">--}}
-    {{--        $(document).ready(function() {--}}
-    {{--            $("#close_thread").click(function(e){--}}
-    {{--                e.preventDefault();--}}
-
-    {{--                let _token = $("input[name='_token']").val();--}}
-    {{--                let post_id = $("#post_id").val();--}}
-    {{--                let comment_id = $("#comment_id").val();--}}
-
-    {{--                $.ajax({--}}
-    {{--                    url: "{{ route('post.answer') }}",--}}
-    {{--                    type:'POST',--}}
-    {{--                    data: {_token:_token, post_id:post_id, comment_id:comment_id},--}}
-    {{--                    success:function(response){--}}
-    {{--                        console.log(response);--}}
-    {{--                    },--}}
-    {{--                });--}}
-    {{--            })});--}}
-    {{--    </script>--}}
 @empty
 @endforelse
