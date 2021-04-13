@@ -21,7 +21,7 @@
                     <input class="form-control" type="text" name="title" id="title" placeholder="Enter Title" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="body">body</label>
+                    <label class="form-label" for="PostBody">body</label>
                     <textarea class="form-control" type="text" name="body" id="PostBody" placeholder="Enter Post Body"
                               required></textarea>
                 </div>
