@@ -13,9 +13,11 @@
     <div class="card-header">
         <h3 class="card-header d-flex justify-content-between align-items-center">
         Courses Table
+        @can('create course')
         <div class="card-tools">
         <a href="{{route('courses.create')}}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create New Course</a>
         </div>
+        @endcan
         
         </h3>
             
@@ -46,9 +48,12 @@
                         <td>{{$course->name}}</td>
                         <td>{{$course->department->name}}</td>
                         <td>
+                            @can('edit course')
                             <a class="fas fa-pen text-yellow-500 p-1 cursor-pointer" 
                             href="{{route('courses.edit', $course->id)}}"></a>
+                            @endcan
 
+                            @can('delete course')
                             <span class="fas fa-times text-red-400 p-1 cursor-pointer" onclick="event.preventDefault();
                             if(confirm('Are you sure you want to delete this course?'))
                             {
@@ -60,6 +65,7 @@
                                 @csrf
                                 @method('delete')
                             </form>
+                            @endcan
                             
                         </td>
                     </tr>

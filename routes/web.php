@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/enrollment/{course:id}', [UserCourseController::class, 'DropCourse'])->name('dropCourse');
 
 
-    //post routes:
+//post routes:
     Route::get('/posts', [PostController::class, 'PostsInEnrolledCourses'])->name('postsInEnrolledCourses');
 
     Route::get('/posts/{course:name}/index', [PostController::class, 'PostsInACourse'])->name('postsInACourse');
@@ -98,22 +98,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'showEdit'])->name('post.showEdit')->middleware('can:update,post');
     Route::patch('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('can:update,post');
 
-
-    Route::patch('/posts/{post}/like', [PostController::class, 'like'])->name('post.like');
-    Route::patch('/posts/{post}/dislike', [PostController::class, 'dislike'])->name('post.dilike');
-    Route::delete('/posts/{post}/like', [PostController::class, 'destroyLike'])->name('post.unlike');
-    Route::delete('/posts/{post}/dislike', [PostController::class, 'destroyLike'])->name('post.undislike');
-    Route::post('/posts/comment/answer', [PostController::class, 'answer'])->name('post.answer');
-
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
-
-    Route::patch('/comments/{comment}/like', [CommentController::class, 'like'])->name('comment.like');
-    Route::patch('/comments/{comment}/dislike', [CommentController::class, 'dislike'])->name('comment.dislike');
-    Route::delete('/comments/{comment}/like', [CommentController::class, 'destroyLike'])->name('comment.unlike');
-    Route::delete('/comments/{comment}/dislike', [CommentController::class, 'destroyLike'])->name('comment.undislike');
-
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
-
 
     //user routes:
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
@@ -125,42 +111,39 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('users', UserController::class);
 
-
-
-
-});
-//Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
-
-Route::middleware(['auth'])->group(function () {
     //role routes
     Route::get('panel', [UserController::class, 'adminPanel'])->name('admin.panel')->middleware(['role:admin']);
     Route::get('panel/roles/manage', [RoleController::class, 'manage'])->name('roles.manage')->middleware(['role:admin']);
     Route::patch('panel/roles/', [RoleController::class, 'updateRoles'])->name('roles.updateRoles')->middleware(['role:admin']);
     Route::get('panel/user/{user}/roles', [UserController::class, 'getRoles'])->name('roles.users')->middleware(['role:admin']);
-    Route::resource('panel/roles', RoleController::class)->middleware(['role:admin']);
+    Route::resource('panel/roles', RoleController::class)->middleware(['role:admin']);;
 
     //permission routes
-    Route::get('panel/permissions/manage', [PermissionController::class, 'manage'])->name('permissions.manage')->middleware(['role:admin']);
-    Route::patch('panel/permissions/', [PermissionController::class, 'updatePermissions'])->name('permissions.updatePermissions')->middleware(['role:admin']);
-    Route::get('panel/user/{user}/permissions', [UserController::class, 'getPermissions'])->name('permissions.users')->middleware(['role:admin']);
-    Route::resource('panel/permissions', PermissionController::class)->middleware(['role:admin']);
+    Route::get('panel/permissions/manage', [PermissionController::class, 'manage'])->name('permissions.manage')->middleware(['role:admin']);;
+    Route::patch('panel/permissions/', [PermissionController::class, 'updatePermissions'])->name('permissions.updatePermissions')->middleware(['role:admin']);;
+    Route::get('panel/user/{user}/permissions', [UserController::class, 'getPermissions'])->name('permissions.users')->middleware(['role:admin']);;
+    Route::resource('panel/permissions', PermissionController::class)->middleware(['role:admin']);;
 
     //organization route
-    Route::get('panel/organization/', [UserController::class, 'univeristiesOrganizations'])->name('admin.panel.organization')->middleware(['role:admin|moderator']);
+    Route::get('panel/organization/', [UserController::class, 'univeristiesOrganizations'])->name('admin.panel.organization')->middleware(['role:admin|moderator']);;
 
     //university routes
-    Route::resource('panel/organization/universities', UniversityController::class)->middleware(['role:admin']);
+    Route::resource('panel/organization/universities', UniversityController::class)->middleware(['role:admin']);;
 
     //faculty routes
-    Route::resource('panel/organization/faculties', FacultyController::class)->middleware(['role:admin']);
+    Route::resource('panel/organization/faculties', FacultyController::class)->middleware(['role:admin']);;
 
     //department routes
-    Route::resource('panel/organization/departments', DepartmentController::class)->middleware(['role:admin']);
+    Route::resource('panel/organization/departments', DepartmentController::class)->middleware(['role:admin']);;
 
     //course routes
-    Route::resource('panel/organization/courses', CourseController::class)->middleware(['role:admin|moderator']);
+    Route::resource('panel/organization/courses', CourseController::class)->middleware(['role:admin|moderator']);;
+
+
+
 
 });
+//Route::post('/courses/{course:id}/posts', [PostController::class, 'CreatePost'])->name('createPost');
 
 // routes for fetching university faculties and faculty departments for the dynamic select menu in user registeration form
 Route::get('university/{university}/faculties', [UniversityController::class, 'getFaculties'])->name('universities.faculties');

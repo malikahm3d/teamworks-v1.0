@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
         $allUniversities = University::all();
         $allFaculties = Faculty::all();
         $allDepartments = Department::all();
-        $roles = Role::all();
+        $roles = [Role::findByName('student'), Role::findByName('tutor')];
         return view('auth.register', [
             'allUniversities' => $allUniversities,
             'allFaculties'=> $allFaculties,

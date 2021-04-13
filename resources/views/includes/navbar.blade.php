@@ -38,6 +38,8 @@
                 </div>
             </li>
 
+            <!-- if user is admin show this dropdown menu -->
+            @role('admin')
             @if (!Route::is('admin.panel'))
 
                 <li class="nav-item dropdown">
@@ -69,8 +71,25 @@
 
                     </ul>
                 </li>
-
             @endif
+            @endrole
+
+            <!-- if user is moderator show this dropdown menu -->
+            @role('moderator')
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle text-info" href="#" role="button"
+                       data-toggle="dropdown" aria-expanded="false">
+                        Moderator Panel
+                    </a>
+                    <ul class="dropdown-menu text-info d-block-flex" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item text-info" href="{{ route('courses.index') }}">
+                                {{ __('Manage Courses') }}
+                            </a>
+                        </li>
+                    </ul>
+            @endrole
+
             @if (!Route::is('dashboard'))
                 <li class="nav-item">
                     <a class="nav-link text-info" href="{{ route('dashboard') }}">Dashboard</a>
@@ -79,21 +98,23 @@
         <!-- Authentication Links -->
             @guest
                 @if (Route::has('login'))
+                {{-- <li class="nav-item">
                     <button class="bg_main_color font-bold py-2 px-4 rounded text-info" href="{{ route('login') }}">
                         {{ __('Login') }}
                     </button>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li> --}}
+                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link text-info" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
                 @endif
 
                 @if (Route::has('register'))
-                    <button class="bg_main_color font-bold py-2 px-3 rounded text-info" href="{{ route('register') }}">
+                    {{-- <button class="bg_main_color font-bold py-2 px-3 rounded text-info" href="{{ route('register') }}">
                         {{ __('Register') }}
-                    </button>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li> --}}
+                    </button> --}}
+                    <li class="nav-item">
+                        <a class="nav-link text-info" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
                 @endif
             @else
                 <li class="nav-item dropdown">
@@ -107,8 +128,7 @@
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <li>
                             {{-- Settings page --}}
-                            <a class="dropdown-item text-info" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            document.getElementById('logout-form').submit();">
+                            <a class="dropdown-item text-info" href="{{ route('users.edit', Auth::user()->id) }}"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         document.getElementById('logout-form').submit();">
                                 {{ __('Settings') }}
                             </a>
                         </li>

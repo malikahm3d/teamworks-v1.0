@@ -14,8 +14,12 @@
         <h3 class="card-header d-flex justify-content-between align-items-center">
         Permissions Table
         <div class="card-tools">
+        @can('create permission')   
         <a href="{{route('permissions.create')}}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create New Permission</a>
+        @endcan
+        @can('manage permission')
         <a href="{{route('permissions.manage')}}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Manage Users' Permissions</a>
+        @endcan
         </div>
         
         </h3>
@@ -57,9 +61,12 @@
                             @endif
                         </td>
                         <td>
+                            @can('edit permission')
                             <a class="fas fa-pen text-yellow-500 p-1 cursor-pointer" 
                             href="{{route('permissions.edit', $permission->id)}}"></a>
+                            @endcan
 
+                            @can('delete permission')
                             <span class="fas fa-times text-red-400 p-1 cursor-pointer" onclick="event.preventDefault();
                             if(confirm('Are you sure you want to delete this permission?'))
                             {
@@ -71,7 +78,7 @@
                                 @csrf
                                 @method('delete')
                             </form>
-                            
+                            @endcan
                         </td>
                     </tr>
                     @empty
