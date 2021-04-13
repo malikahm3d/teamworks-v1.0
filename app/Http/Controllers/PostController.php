@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Course;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -13,7 +14,7 @@ class PostController extends Controller
     public function PostsInACourse(Course $course)
     {
 
-        $posts = $course->posts()->withLikes()->with(['user', 'comments', 'file'])->orderByDesc('created_at')->get();
+        $posts = $course->posts()->orderBy('created_at', 'desc')->withLikes()->with('user')->get();
         return view('courses.posts.PostsInACourse', [
             'posts' => $posts,
             'course' => $course
@@ -24,8 +25,6 @@ class PostController extends Controller
     {
         //show posts in enrolled courses
         //TODO optimize this querying
-        //improve enrollments model to remove redundancies from this query and create post preview component
-        //the current post component is loading things we don't need in the preview cards.
         $regCoursesIds = Course::getCourses($request->user());
         $posts = Post::withLikes()->with('user')->whereIn('course_id', $regCoursesIds)->get();
         return view('courses.posts.PostsInEnrolledCourses',[
@@ -56,7 +55,6 @@ class PostController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-
         $this->createFile($newPost, $request);
 
         return redirect(route('showPost', $newPost))->with('message', 'Post Created Successfully!');
@@ -67,21 +65,28 @@ class PostController extends Controller
     {
 
         $this->validate($request, [
-            'file' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,xlx', 'max:1999']
+            'filenames' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,svg,xlx,xlsx,zip,rar,txt', 'max:1999']
         ]);
 
-        $fileModel = new \App\Models\File();
+        if($request->file('filenames')) {
+            try {
+                foreach($request->file('filenames') as $file) {
+                    $fileModel = new \App\Models\File();
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $filePath = $file->storeAs('uploads', $fileName, 'public');
 
-        if($request->file()) {
-            $fileName = time().'_'.$request->file->getClientOriginalName();
-            //TODO add random string to name.
-            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+                    $fileModel->name = time() . '_' . Str::random(5) . '_' . $file->getClientOriginalName();
+                    $fileModel->file_path = '/storage/' . $filePath;
+                    $filesarray[] = $fileModel;
+                    $post->file()->save($fileModel);
 
-            $fileModel->name = time().'_'.$request->file->getClientOriginalName();
-            $fileModel->file_path = '/storage/' . $filePath;
-            $post->file()->save($fileModel);
 
+                }
+            } catch (\Throwable $e){
+                return back()->with('message', 'File Upload Failed');
+            }
         }
+
 
 
     }
@@ -99,7 +104,8 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         $course = $post->course;
-        if(!is_null($post->file)) $post->file->delete();
+        //if(!is_null($post->file)) $post->file->delete();
+        //keep file on post delete.
         $post->comments()->each(function($comment) {
             $comment->delete(); // <-- direct deletion
          });

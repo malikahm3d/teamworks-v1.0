@@ -10,6 +10,11 @@
         @endif
 
         <div class="flex items-center mr-4 {{$likeable->isLikedBy(auth()->user())? 'text-blue-500' : 'text-gray-500'}}">
+            <button type="submit"
+                    class="text-xs"
+                    id="like"
+            >
+
             <svg viewBox="0 0 20 20"
                  class="mr-1 mb-3 w-3"
             >
@@ -26,13 +31,9 @@
                     </g>
                 </g>
             </svg>
-
-            <button type="submit"
-                    class="text-xs"
-                    id="like"
-            >
-                {{ $likeable->likes ?: 0 }}
             </button>
+
+            {{ $likeable->likes ?: 0 }}
         </div>
 
 
@@ -50,6 +51,10 @@
         @endif
 
         <div id="dislike_div"class="flex items-center {{$likeable->isDislikedBy(auth()->user())? 'text-blue-500' : 'text-gray-500'}}">
+            <button type="submit"
+                    class="text-xs"
+                    id="dislike_value"
+            >
             <svg viewBox="0 0 20 20"
                  class="mr-1 mb-3 w-3"
             >
@@ -66,13 +71,9 @@
                     </g>
                 </g>
             </svg>
-
-            <button type="submit"
-                    class="text-xs"
-                    id="dislike_value"
-            >
-                {{ $likeable->dislikes ?: 0 }}
             </button>
+
+                {{ $likeable->dislikes ?: 0 }}
         </div>
     </form>
 
