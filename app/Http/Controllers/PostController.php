@@ -65,7 +65,7 @@ class PostController extends Controller
     {
 
         $this->validate($request, [
-            'filenames' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,svg,xlx,xlsx,zip,rar,txt', 'max:1999']
+            'filenames.*' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,png,svg,xlx,xlsx,zip,rar,txt', 'max:1999']
         ]);
 
         if($request->file('filenames')) {
