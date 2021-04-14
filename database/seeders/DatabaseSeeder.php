@@ -82,7 +82,7 @@ class DatabaseSeeder extends Seeder
         $admin1 = User::firstOrCreate([
             'name' => 'saeed', 'username' => 'admin1',
             'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
-            'email' => 'saeed@admin.com', 'password' => 'admin12345']);
+            'email' => 'saeed@admin.com', 'password' => Hash::make('admin12345')]);
         $admin2 = User::firstOrCreate([
             'name' => 'malik', 'username' => 'admin2',
             'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
         $admin3 = User::firstOrCreate([
             'name' => 'osamah', 'username' => 'admin3',
             'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
-            'email' => 'osamah@admin.com', 'password' => 'admin12345']);
+            'email' => 'osamah@admin.com', 'password' => Hash::make('admin12345')]);
         $admin4 = User::firstOrCreate([
             'name' => 'makkawi', 'username' => 'admin4',
             'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
         $admin5 = User::firstOrCreate([
             'name' => 'kashgri', 'username' => 'admin5',
             'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
-            'email' => 'kashgri@admin.com', 'password' => 'admin12345']);
+            'email' => 'kashgri@admin.com', 'password' => Hash::make('admin12345')]);
 
         $admin1->syncRoles([$admin_role]);
         $admin2->syncRoles([$admin_role]);
