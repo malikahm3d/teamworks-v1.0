@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
@@ -57,17 +58,17 @@ class DatabaseSeeder extends Seeder
 
         $admin_role = Role::firstOrCreate(['name' => 'admin'])->givePermissionTo([
             'create role', 'manage role', 'edit role', 'delete role',
-            'create permission', 'manage permission', 'edit permission', 'delete permission', 
-            'create university', 'edit university', 'delete university', 
-            'create faculty', 'edit faculty', 'delete faculty', 
-            'create department', 'edit department', 'delete department', 
-            'create course', 'edit course', 'delete course', 
-            'create post', 'edit post', 'delete post', 
+            'create permission', 'manage permission', 'edit permission', 'delete permission',
+            'create university', 'edit university', 'delete university',
+            'create faculty', 'edit faculty', 'delete faculty',
+            'create department', 'edit department', 'delete department',
+            'create course', 'edit course', 'delete course',
+            'create post', 'edit post', 'delete post',
             'add comment', 'upload file']);
 
         $moderator_role = Role::firstOrCreate(['name' => 'moderator'])->givePermissionTo([
             'create course', 'edit course', 'delete course',
-            'create post', 'edit post', 'delete post', 
+            'create post', 'edit post', 'delete post',
             'add comment', 'upload file']);
 
         $student_role = Role::firstOrCreate(['name' => 'student'])->givePermissionTo([
@@ -79,24 +80,24 @@ class DatabaseSeeder extends Seeder
         $faculty1 = Faculty::firstOrCreate(['name' => 'faculty1', 'university_id' => 1]);
         $department1 = Department::firstOrCreate(['name' => 'department1', 'faculty_id' => 1]);
         $admin1 = User::firstOrCreate([
-            'name' => 'saeed', 'username' => 'admin1', 
-            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1, 
+            'name' => 'saeed', 'username' => 'admin1',
+            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
             'email' => 'saeed@admin.com', 'password' => 'admin12345']);
         $admin2 = User::firstOrCreate([
-            'name' => 'malik', 'username' => 'admin2', 
-            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1, 
-            'email' => 'malik@admin.com', 'password' => 'admin12345']);
+            'name' => 'malik', 'username' => 'admin2',
+            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
+            'email' => 'malik@admin.com', 'password' => Hash::make('admin12345')]);
         $admin3 = User::firstOrCreate([
-            'name' => 'osamah', 'username' => 'admin3', 
-            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1, 
+            'name' => 'osamah', 'username' => 'admin3',
+            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
             'email' => 'osamah@admin.com', 'password' => 'admin12345']);
         $admin4 = User::firstOrCreate([
-            'name' => 'makkawi', 'username' => 'admin4', 
-            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1, 
-            'email' => 'makkawi@admin.com', 'password' => 'admin12345']);
+            'name' => 'makkawi', 'username' => 'admin4',
+            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
+            'email' => 'makkawi@admin.com', 'password' => Hash::make('admin12345')]);
         $admin5 = User::firstOrCreate([
-            'name' => 'kashgri', 'username' => 'admin5', 
-            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1, 
+            'name' => 'kashgri', 'username' => 'admin5',
+            'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
             'email' => 'kashgri@admin.com', 'password' => 'admin12345']);
 
         $admin1->syncRoles([$admin_role]);
@@ -104,6 +105,6 @@ class DatabaseSeeder extends Seeder
         $admin3->syncRoles([$admin_role]);
         $admin4->syncRoles([$admin_role]);
         $admin5->syncRoles([$admin_role]);
-        
+
     }
 }
