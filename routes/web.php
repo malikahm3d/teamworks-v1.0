@@ -101,6 +101,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
 
+    Route::patch('/posts/{post}/like', [PostController::class, 'like'])->name('post.like');
+    Route::patch('/posts/{post}/dislike', [PostController::class, 'dislike'])->name('post.dilike');
+    Route::delete('/posts/{post}/like', [PostController::class, 'destroyLike'])->name('post.unlike');
+    Route::delete('/posts/{post}/dislike', [PostController::class, 'destroyLike'])->name('post.undislike');
+    Route::post('/posts/comment/answer', [PostController::class, 'answer'])->name('post.answer');
+
+    Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
+
+    Route::patch('/comments/{comment}/like', [CommentController::class, 'like'])->name('comment.like');
+    Route::patch('/comments/{comment}/dislike', [CommentController::class, 'dislike'])->name('comment.dislike');
+    Route::delete('/comments/{comment}/like', [CommentController::class, 'destroyLike'])->name('comment.unlike');
+    Route::delete('/comments/{comment}/dislike', [CommentController::class, 'destroyLike'])->name('comment.undislike');
+    
     //user routes:
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
