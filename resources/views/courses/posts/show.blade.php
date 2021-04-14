@@ -20,6 +20,7 @@
             </div>
         @else
                 {{--            if post is not answered, allow posting of comments--}}
+                @can('add comment')
                 <form method="post" id="commentForm" action="{{ route('comment.add') }}">
                     @csrf
                     <div class="form-group">
@@ -30,6 +31,7 @@
                     </div>
                     <button type="submit" class="form-group btn btn-sm btn-outline-danger py-0" style="font-size: 0.8em;"> Add Comment</button>
                 </form>
+                @endcan
         @endif
         <hr />
         @include('courses.posts.partials.comments', ['comments' => $comments, 'post' => $post])

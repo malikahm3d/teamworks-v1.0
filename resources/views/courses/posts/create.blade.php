@@ -25,12 +25,13 @@
                     <textarea class="form-control" type="text" name="body" id="PostBody" placeholder="Enter Post Body"
                               required></textarea>
                 </div>
-                {{--                TODO add role restriction for tutor only--}}
+                @can('upload file')
                 <div class="form-group d-block fas fa-folder fa-1.5x">
                     <input name="filenames[]" id="file" type="file" style="display: none" multiple/>
                     <button type="button" onclick="document.getElementById('file').click()">Upload Attachment(s)</button>
                 </div>
                 <button class="btn btn-info mb-2 btn-block ">Submit</button>
+                @endcan
             </form>
         </div>
     </div>

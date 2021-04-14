@@ -14,8 +14,12 @@
         <h3 class="card-header d-flex justify-content-between align-items-center">
         Roles Table
         <div class="card-tools">
+        @can('create role')
         <a href="{{route('roles.create')}}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create New Role</a>
+        @endcan
+        @can('manage role')
         <a href="{{route('roles.manage')}}" class="btn btn-primary"><i class="fas fa-plus-circle"></i>Manage Users' Roles</a>
+        @endcan
         </div>
         
         </h3>
@@ -57,9 +61,12 @@
                             @endif
                         </td>
                         <td>
+                            @can('edit role')
                             <a class="fas fa-pen text-yellow-500 p-1 cursor-pointer" 
                             href="{{route('roles.edit', $role->id)}}"></a>
+                            @endcan
 
+                            @can('delete role')
                             <span class="fas fa-times text-red-400 p-1 cursor-pointer" onclick="event.preventDefault();
                             if(confirm('Are you sure you want to delete this role?'))
                             {
@@ -71,7 +78,7 @@
                                 @csrf
                                 @method('delete')
                             </form>
-                            
+                            @endcan
                         </td>
                     </tr>
                     @empty

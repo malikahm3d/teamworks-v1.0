@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Edit post')
-
+@can('edit post')
 @section('content')
 
     <form action="{{ route('post.edit', $post) }}" method="POST" novalidate class="needs-validation">
@@ -29,3 +29,4 @@
     </form>
     <script src="{{ asset('js/formscript.js') }}"></script>
 @endsection
+@endcan

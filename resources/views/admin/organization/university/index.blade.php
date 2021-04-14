@@ -14,9 +14,11 @@
     <div class="card-header">
         <h3 class="card-header d-flex justify-content-between align-items-center">
         Universities Table
+        @can('create university')
         <div class="card-tools">
         <a href="{{route('universities.create')}}" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Create New University</a>
         </div>
+        @endcan
         </h3>
             
     </div>
@@ -56,9 +58,12 @@
                             @endif
                         </td>
                         <td>
+                            @can('edit university')
                             <a class="fas fa-pen text-yellow-500 p-1 cursor-pointer" 
                             href="{{route('universities.edit', $university->id)}}"></a>
+                            @endcan
 
+                            @can('delete university')
                             <span class="fas fa-times text-red-400 p-1 cursor-pointer" onclick="event.preventDefault();
                             if(confirm('Are you sure you want to delete this university?'))
                             {
@@ -70,7 +75,7 @@
                                 @csrf
                                 @method('delete')
                             </form>
-                            
+                            @endcan                            
                         </td>
                     </tr>
                     @empty
