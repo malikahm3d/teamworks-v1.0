@@ -113,7 +113,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/comments/{comment}/dislike', [CommentController::class, 'dislike'])->name('comment.dislike');
     Route::delete('/comments/{comment}/like', [CommentController::class, 'destroyLike'])->name('comment.unlike');
     Route::delete('/comments/{comment}/dislike', [CommentController::class, 'destroyLike'])->name('comment.undislike');
-    
+
     //user routes:
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
