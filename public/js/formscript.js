@@ -6,7 +6,7 @@ tinymce.init({
         /\<xsl\:[^>]+\>/g,  // Protect <xsl:...>
         /<\?php.*?\?>/g, // Protect php code
     ],
-    valid_elements : 'a[href|target=_blank],strong/b,div[align],br'
+    valid_elements : 'a[href|target=_blank],strong/b,div[align],br,italic/i,u,ul,ol,li,blockquote'
 });
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
