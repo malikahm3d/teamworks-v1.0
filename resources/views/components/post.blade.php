@@ -7,8 +7,8 @@
                 <p class="text-black-50 mt-2 mb-2 border-secondary">{{ $post->title }}</p>
                 <p class="text-black-100 mt-2 mb-2 border-secondary text-body">{!! $post->body !!}</p>
                 {{--                TODO post body not rendering html tags--}}
-                @if($post->file)
-                    @if($post->file && Route::is('showPost'))
+                @if(count($post->file))
+                    @if(isset($post->file)  && Route::is('showPost'))
                         <button
                             class="btn btn-outline-dark btn-sm py-0 mb-2" style="font-size: 0.8em" type="button"
                             data-toggle="collapse" data-target="#collapse_target" aria-expanded="false"

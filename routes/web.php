@@ -95,8 +95,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/posts/{post}/delete', [PostController::class, 'delete'])->name('post.delete')->middleware('can:delete,post');
 
-    Route::get('/posts/{post}/edit', [PostController::class, 'showEdit'])->name('post.showEdit')->middleware('can:update,post');
-    Route::patch('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit')->middleware('can:update,post');
+    Route::get('/posts/{post}/edit', [PostController::class, 'showEdit'])
+        ->name('post.showEdit')->middleware('can:update,post');
+
+    Route::patch('/posts/{post}/edit', [PostController::class, 'edit'])
+        ->name('post.edit')->middleware('can:update,post');
 
     Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class, 'replyStore'])->name('reply.add');
