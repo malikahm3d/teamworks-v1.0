@@ -65,20 +65,19 @@ class DatabaseSeeder extends Seeder
             'create course', 'edit course', 'delete course',
             'create post', 'edit post', 'delete post',
             'add comment', 'upload file']);
-
         $moderator_role = Role::firstOrCreate(['name' => 'moderator'])->givePermissionTo([
             'create course', 'edit course', 'delete course',
             'create post', 'edit post', 'delete post',
             'add comment', 'upload file']);
-
         $student_role = Role::firstOrCreate(['name' => 'student'])->givePermissionTo([
-            'create course', 'edit course', 'delete course']);
-
-        $tutor_role = Role::firstOrCreate(['name' => 'tutor'])->givePermissionTo(['upload file']);
+            'enroll', 'create post', 'edit post', 'delete post', 'add comment']);
+        $tutor_role = Role::firstOrCreate(['name' => 'tutor'])->givePermissionTo([
+            'enroll', 'create post', 'edit post', 'delete post', 'add comment', 'upload file']);
 
         $university1 = University::firstOrCreate(['name' => 'university1']);
         $faculty1 = Faculty::firstOrCreate(['name' => 'faculty1', 'university_id' => 1]);
         $department1 = Department::firstOrCreate(['name' => 'department1', 'faculty_id' => 1]);
+
         $admin1 = User::firstOrCreate([
             'name' => 'saeed', 'username' => 'admin1',
             'university_id' => 1, 'faculty_id' => 1, 'department_id' => 1,
