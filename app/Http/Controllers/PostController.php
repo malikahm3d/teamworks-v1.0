@@ -48,10 +48,15 @@ class PostController extends Controller
         ]);
 
 
+        $str = htmlspecialchars($request->body);
+        //strip unescaped input from any tags
+        $sanitizedBody = preg_replace('#&lt;(/?(?:pre|b||u|ul|li|ol|blockquote|i)(?:.*?)?)&gt;#', '<\1>', $str);
+        //restore replaced ones that are whitelisted
+
 
         $newPost = $course->posts()->create([
             'title' => $request->title,
-            'body' => $request->body,
+            'body' => $sanitizedBody,
             'user_id' => $request->user()->id
         ]);
 //        if ($this->authorize('upload file')){
@@ -106,8 +111,7 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         $course = $post->course;
-        //if(!is_null($post->file)) $post->file->delete();
-        //keep file on post delete.
+        if(count($post->file))  $post->file->delete();
         $post->comments()->each(function($comment) {
             $comment->delete(); // <-- direct deletion
          });

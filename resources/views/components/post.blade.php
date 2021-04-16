@@ -6,7 +6,6 @@
                 <span class="text-sm">{{ $post->created_at->diffForHumans() }}</span>
                 <p class="text-black-50 mt-2 mb-2 border-secondary">{{ $post->title }}</p>
                 <p class="text-black-100 mt-2 mb-2 border-secondary text-body">{!! $post->body !!}</p>
-                {{--                TODO post body not rendering html tags--}}
                 @if(count($post->file))
                     @if(isset($post->file)  && Route::is('showPost'))
                         <button
