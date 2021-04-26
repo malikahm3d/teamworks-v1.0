@@ -72,7 +72,7 @@ class PostPolicy
     public function delete(User $user, Post $post)
     {
         //
-        return $user->id === $post->user_id or $user->hasRole('admin') or ($user->hasRole('moderator') and $user->department_id === $post->user->department_id)
+        return $user->id === $post->user_id || $user->hasRole('admin') || ($user->hasRole('moderator') && $user->department_id === $post->user->department_id)
             ? Response::allow()
             : Response::deny('You do not own this post.');
     }

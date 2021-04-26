@@ -30,8 +30,8 @@
                     <input name="filenames[]" id="file" type="file" style="display: none" multiple/>
                     <button type="button" onclick="document.getElementById('file').click()">Upload Attachment(s)</button>
                 </div>
-                <button class="btn btn-info mb-2 btn-block ">Submit</button>
                 @endcan
+                <button class="btn btn-info mb-2 btn-block ">Submit</button>
             </form>
         </div>
     </div>
