@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', e($post->title))
+@section('title', '| ' . e($post->title))
 @section('content')
 
     <x-post :post="$post"/>
@@ -16,7 +16,7 @@
         @endif
         @if(isset($post->comment_id))
             <div class="card-body">
-                <h5 class="text-info text-center"> Post has been answered</h5>
+                <h5 class="text-info text-center">Post has been answered</h5>
             </div>
         @else
                 {{--            if post is not answered, allow posting of comments--}}

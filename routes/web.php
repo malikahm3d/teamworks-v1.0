@@ -29,15 +29,15 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('test');
+    redirect()->route('homepage');
 });
 
 Route::get('/home', function () {
-    return redirect(route('postsInEnrolledCourses'));
-})->name('homepage');
+    return redirect()->route('postsInEnrolledCourses');
+})->middleware('auth')->name('homepage');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('homepage');
 })->middleware(['auth'])->name('dashboard');
 
 

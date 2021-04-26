@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Create Post')
+@section('title', '| Create Post')
 
 @section('content')
     @if ($errors->any())
@@ -13,7 +13,7 @@
     @endif
     <div class="row m-4 mb-5">
         <div class="col-6 offset-3">
-            <h1 class="text-center">New Post!</h1>
+            <h1 class="text-center">New Post in {{ $course->name }}!</h1>
             <form action="{{ route('post.create', $course) }}" method="POST" enctype="multipart/form-data" novalidate class="needs-validation">
                 @csrf
                 <div class="mb-3">

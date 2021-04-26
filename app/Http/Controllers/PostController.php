@@ -47,21 +47,17 @@ class PostController extends Controller
             'file' => ['nullable', 'mimes:pdf,ppt,docx,jpg,jpeg,xlx', 'max:1999']
         ]);
 
-
         $str = htmlspecialchars($request->body);
         //strip unescaped input from any tags
-        $sanitizedBody = preg_replace('#&lt;(/?(?:pre|b||u|ul|li|ol|blockquote|i)(?:.*?)?)&gt;#', '<\1>', $str);
+        $sanitizedBody = preg_replace('#&lt;(/?(?:pre|b||u|ul|li|ol|blockquote|i|br)(?:.*?)?)&gt;#', '<\1>', $str);
         //restore replaced ones that are whitelisted
-
 
         $newPost = $course->posts()->create([
             'title' => $request->title,
             'body' => $sanitizedBody,
             'user_id' => $request->user()->id
         ]);
-//        if ($this->authorize('upload file')){
-//
-//        }
+
         $this->createFile($newPost, $request);
 
         return redirect(route('showPost', $newPost))->with('message', 'Post Created Successfully!');
@@ -84,17 +80,13 @@ class PostController extends Controller
 
                     $fileModel->name = time() . '_' . Str::random(5) . '_' . $file->getClientOriginalName();
                     $fileModel->file_path = '/storage/' . $filePath;
-                    $filesarray[] = $fileModel;
                     $post->file()->save($fileModel);
-
 
                 }
             } catch (\Throwable $e){
                 return back()->with('message', 'File Upload Failed');
             }
         }
-
-
 
     }
 

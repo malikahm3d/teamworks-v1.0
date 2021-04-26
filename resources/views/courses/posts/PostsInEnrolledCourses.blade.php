@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'posts in enrolled courses')
+@section('title', '| Home')
 @section('content')
     @if($posts->count())
         @include('includes.table', ['posts' => $posts])

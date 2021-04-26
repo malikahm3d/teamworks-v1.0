@@ -26,7 +26,6 @@ trait Likeable
             }
         );
 
-        
     }
 
     public function scopeLikeableWithLikes(Builder $query, $id)
@@ -43,10 +42,10 @@ trait Likeable
             }
         )->where(get_class()::getTable().'.id', $id);
 
-        
+
     }
 
-    
+
     public function like($user = null, $liked = true)
     {
         $this->likes()->updateOrCreate(

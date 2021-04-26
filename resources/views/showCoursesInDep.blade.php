@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', '| Enrollment')
 @section('content')
 
 @if($courses->count())

@@ -1,8 +1,11 @@
 @forelse($comments as $i => $comment)
     <div id="test" class="border rounded p-2 m-2 mb-2">
+
         <strong class="font-light">{{ $comment->user->name }}</strong>
         <p class="text-lg" id="comment_body">{{ $comment->body }}</p>
+
         @include('components.like-button', ['likeables' => 'comments', 'likeable_id' => $comment->id, 'likeable'=> $comment->likeableWithLikes($comment->id)->firstOrFail()])
+
         @if($post->owner(auth()->user()) && !isset($post->comment_id))
             <form action="{{ route('post.answer') }}" method="POST" class="m-2 d-inline">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -32,11 +35,13 @@
                 </div>
             </form>
         </div>
+
         <div class="row-cols-md-4">
             <div class="col-md-12">
                 @include('courses.posts.partials.comments', ['comments' => $comment->replies])
             </div>
         </div>
+
     </div>
 @empty
 @endforelse
