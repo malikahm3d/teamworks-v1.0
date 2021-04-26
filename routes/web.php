@@ -29,7 +29,7 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    redirect()->route('homepage');
+    return redirect()->route('homepage');
 });
 
 Route::get('/home', function () {
