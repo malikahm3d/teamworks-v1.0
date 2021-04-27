@@ -10,6 +10,7 @@ tinymce.init({
 });
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
+    //TODO email and password regex automated filteration cpanel tqeemdoctork, independent files, tutor recommendation ML
     'use strict';
     window.addEventListener('load', function() {
         //TODO: more advanced from checking with individual error messages
