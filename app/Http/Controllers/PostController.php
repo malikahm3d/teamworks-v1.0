@@ -58,7 +58,7 @@ class PostController extends Controller
             'user_id' => $request->user()->id
         ]);
 
-        $this->createFile($newPost, $request);
+        if($request->file('filenames')) $this->createFile($newPost, $request);
 
         return redirect(route('showPost', $newPost))->with('message', 'Post Created Successfully!');
 
